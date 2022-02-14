@@ -1,22 +1,30 @@
 import React from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { useEffect } from 'react';
+import { FlatList, StyleSheet, Text, View, ScrollView } from 'react-native';
 
 export default function DashboardClassList({ classes }) {
 
     const array = [];
+    let counter = 0;
     classes.forEach((course) => {
         array.push({
-            key: course["name"]
+            key: course["name"],
+            name: course["name"]
         })
+
+        counter += 1;
     });
     
     return (
-        <View style={styles.container}>
-      <FlatList
-        data={array}
-        renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
-      />
-    </View>
+        <ScrollView contentContainerStyle={{flex:1, justifyContent: "space-evenly"}}>
+          { array.map((course) => {
+            return (
+              <View key={course.key} style={{padding: 10}}>
+                  <Text>{course.name}</Text>
+              </View>
+            )
+          }) }
+        </ScrollView>
     )
 }
 
