@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "Gradual",
+    "slug": "Gradual",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/gradualIcon.png",
+    "splash": {
+      "image": "./assets/gradualIcon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "package" : "com.gradual.gradual",
+      "versionCode" : 1
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
