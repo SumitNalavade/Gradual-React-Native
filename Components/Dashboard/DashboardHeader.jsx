@@ -10,7 +10,6 @@ export default function DashboardHeader({ info, finalWeightedGPA, finalUnweighte
     return (
         <View style={[styles.container, styles.shadowProp]}>
             <View style={styles.upperContainer}>
-                <Ionicons name="refresh-outline" size={30} color="black" />
                 <Ionicons name="person-outline" size={24} color="black" />
             </View>
 
@@ -35,7 +34,7 @@ const styles = StyleSheet.create({
     upperContainer: {
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-between",
+        justifyContent: "flex-end",
         marginBottom: 20
     },
 

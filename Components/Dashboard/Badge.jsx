@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from "react-native";
 
-export default function Badge({ grade }) {
+export default function Badge({ grade, color }) {
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: color }]}>
             <Text style={styles.badge}>{grade}</Text>
         </View>
     )
@@ -21,6 +21,5 @@ const styles = StyleSheet.create({
     
     container: {
         borderRadius: 10,
-        backgroundColor: "green"
     }
 })

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { SafeAreaView, View } from "react-native";
+import { SafeAreaView, View, Text } from "react-native";
 
 import DashboardHeader from "./DashboardHeader";
 import DashboardClassList from "./DashboardClassList";
@@ -19,16 +19,14 @@ export default function Dashboard({ route, navigation }) {
         finalUnweightedGPA = student.finalUnweightedGPA
     }
 
-    useEffect(() => { 
-        navigation.setParams({ 
-            headerTitle: "Hello"
-        }) 
-    }, [])
+    const navigateToClassDetails = (course, courseInfo) => {
+        return navigation.navigate("Class Details", { course: { ...course, ...courseInfo } })
+    }
 
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: "white" }}>
             <DashboardHeader info={info} finalWeightedGPA={finalWeightedGPA.toFixed(3)} finalUnweightedGPA={finalUnweightedGPA.toFixed(3)} />
-            <DashboardClassList classes={classes} />
+            <DashboardClassList classes={classes} schedule={schedule} navigateToClassDetails={navigateToClassDetails} />
         </SafeAreaView>
     )
 }

@@ -1,10 +1,10 @@
 import React from 'react';
 import { useEffect } from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { Divider } from "react-native-elements";
 import Badge from './Badge';
 
-export default function DashboardClassList({ classes }) {
+export default function DashboardClassList({ classes, schedule, navigateToClassDetails }) {
     
     useEffect(() => {
       try{
@@ -12,37 +12,30 @@ export default function DashboardClassList({ classes }) {
       } catch {
         console.log("Split Error");
       }
-    }, [])
+    })
 
     return (
-        <ScrollView contentContainerStyle={{flex:1, justifyContent: "space-evenly"}}>
+        <ScrollView contentContainerStyle={{flexGrow: 1, justifyContent: "space-evenly"}} style={{paddingHorizontal: 10}}>
           { classes.map((course) => {
+            const { name, grade} = course;
+            const color = parseFloat(grade) >= 90 ? "#30d158" : parseFloat(grade) >= 80 ? "#ffd60a" : "#ff443a";
+            const courseInfo = schedule.find((elm) => elm.courseName === course.name)
+          
             return (
-              <View key={classes.indexOf(course)} style={{width: "100%", padding: 10, flexDirection: "row", justifyContent: "space-between"}}>
-                <View style={{width: "70%"}}>
-                  <Text style={{fontSize: 18}}>{course.name}</Text>
-                </View>
+              <TouchableOpacity key={classes.indexOf(course)} onPress={() => navigateToClassDetails(course, courseInfo)} >
+                <View style={{paddingVertical: 10, Height: 50, flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
+                  <View style={{width: "70%"}}>
+                    <Text style={{fontSize: 16, flexWrap: "wrap"}}>{name}</Text>
+                  </View>
 
-                <View style={{width: "30%"}}>
-                  <Badge grade={course.grade}/>
+                  <View style={{width: "30%"}}>
+                    <Badge grade={grade} color={color}/>
+                  </View>
                 </View>
-                  <Divider />
-              </View>
+                <Divider />
+              </TouchableOpacity>
             )
           }) }
         </ScrollView>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-     flex: 1,
-     paddingTop: 22
-    },
-    item: {
-      padding: 10,
-      paddingBottom: 20,
-      fontSize: 18,
-      height: 44,
-    },
-  });

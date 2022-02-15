@@ -1,8 +1,6 @@
 import axios from "axios"
 
-export async function getPredictedGPA() {
-    const student = {...JSON.parse(localStorage.getItem('student'))};
-
+export async function getPredictedGPA(student) {
     let {weightedGPA, unweightedGPA} = student.gpa;
     let {grade} = student.info;
     let {classes} = student
