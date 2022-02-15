@@ -38,7 +38,11 @@ export default function LoginScreen({ navigation }) {
             setIsLoading(false)
         }
 
-        const { finalWeightedGPA, finalUnweightedGPA } = await getPredictedGPA(student);
+        try {
+          var { finalWeightedGPA, finalUnweightedGPA } = await getPredictedGPA(student).catch((error) => console.log(error));
+        } catch {
+          console.log("GPA Post Error");
+        }
         
         return navigation.navigate("Dashboard", { student: { ...student, finalWeightedGPA, finalUnweightedGPA } })
      };

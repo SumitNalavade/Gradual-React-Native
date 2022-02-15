@@ -1,19 +1,9 @@
 import React from 'react';
-import { useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { Divider } from "react-native-elements";
 import Badge from './Badge';
 
 export default function DashboardClassList({ classes, schedule, navigateToClassDetails }) {
-    
-    useEffect(() => {
-      try{
-        classes.forEach((course) => course.name = course.name.split("-")[1].substring(2).trim());
-      } catch {
-        console.log("Split Error");
-      }
-    })
-
     return (
         <ScrollView contentContainerStyle={{flexGrow: 1, justifyContent: "space-evenly"}} style={{paddingHorizontal: 10}}>
           { classes.map((course) => {
@@ -25,7 +15,7 @@ export default function DashboardClassList({ classes, schedule, navigateToClassD
               <TouchableOpacity key={classes.indexOf(course)} onPress={() => navigateToClassDetails(course, courseInfo)} >
                 <View style={{paddingVertical: 10, Height: 50, flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
                   <View style={{width: "70%"}}>
-                    <Text style={{fontSize: 16, flexWrap: "wrap"}}>{name}</Text>
+                    <Text style={{fontSize: 16, flexWrap: "wrap"}}>{name.split("-")[1].substring(2).trim()}</Text>
                   </View>
 
                   <View style={{width: "30%"}}>
