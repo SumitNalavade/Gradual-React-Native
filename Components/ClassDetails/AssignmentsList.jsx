@@ -1,4 +1,4 @@
-import { StyleSheet, ScrollView, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { Divider } from "react-native-elements";
 
 export default function AssignmentsList({ assignments, type }) {
@@ -6,7 +6,7 @@ export default function AssignmentsList({ assignments, type }) {
     return (
         <View style={{padding: 10, marginBottom: 50}}>
             <Text style={styles.header}>{type}</Text>
-            <ScrollView>
+            <View>
                 { assignments.map((assignment) => {
                     const { assignment:name, score } = assignment
                     const color = parseFloat(score) >= 90 ? "#30d158" : parseFloat(score) >= 80 ? "#ffd60a" : "#ff443a";
@@ -21,7 +21,7 @@ export default function AssignmentsList({ assignments, type }) {
                         </View>
                     )
                 }) }
-            </ScrollView>
+            </View>
         </View>
     )
 }

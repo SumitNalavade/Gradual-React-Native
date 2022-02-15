@@ -1,10 +1,11 @@
 import { useEffect } from "react";
-import { View, Text } from "react-native";
+import { ScrollView } from "react-native";
 import AssignmentsList from "./AssignmentsList";
+import ClassInformation from "./ClassInformation";
 
 export default function ClassDetails({ navigation, route }) {
     const { course } = route.params;
-    
+
     const allMajorAssignments = course["assignments"].filter(assignment => assignment["category"] === "Major Grades")
     const allMinorAssignments = course["assignments"].filter(assignment => assignment["category"] === "Minor Grades")
 
@@ -19,9 +20,11 @@ export default function ClassDetails({ navigation, route }) {
     }, [])
 
     return (
-        <View style={{height: "100%", display: "flex", justifyContent: "flex-start" ,backgroundColor: "white" }}>
+        <ScrollView contentContainerStyle={{justifyContent: "space-between"}}>
             <AssignmentsList assignments={allMajorAssignments} type="Major Grades"/>
             <AssignmentsList assignments={allMinorAssignments} type="Minor Grades"/>
-        </View>
+
+            <ClassInformation course={course} />
+        </ScrollView>
     )
 }
