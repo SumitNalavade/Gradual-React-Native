@@ -16,7 +16,7 @@ export async function getPredictedGPA(student) {
 
     grade = parseFloat(grade);
 
-    const { data } = await axios.post("https://gradualgrades.herokuapp.com/predictedGPA", {
+    const { data } = await axios.post("http://gradual-env.eba-57kd6mpm.us-east-2.elasticbeanstalk.com/predictedGPA", {
         weightedGPA,
         unweightedGPA,
         "studentGrade": grade,
@@ -27,12 +27,12 @@ export async function getPredictedGPA(student) {
 }
 
 export async function getStudentData(username, password, url) {
-    const { data } = await axios.get(`${url}?username=${username}&password=${password}`);
+    const { data } = await axios.get(`${url}/${username}/${password}`);
 
     return data
 }
 
-export const infoURL = "https://gradual-deploy.vercel.app/students/info"
-export const scheduleURL = "https://gradual-deploy.vercel.app/students/schedule"
-export const currentClassesURL = "https://gradual-deploy.vercel.app/students/currentclasses"
-export const gpaURL = "https://gradual-deploy.vercel.app/students/gpa"
+export const infoURL = "http://gradual-env.eba-57kd6mpm.us-east-2.elasticbeanstalk.com/students/info"
+export const scheduleURL = "http://gradual-env.eba-57kd6mpm.us-east-2.elasticbeanstalk.com/students/schedule"
+export const currentClassesURL = "http://gradual-env.eba-57kd6mpm.us-east-2.elasticbeanstalk.com/students/currentclasses"
+export const gpaURL = "http://gradual-env.eba-57kd6mpm.us-east-2.elasticbeanstalk.com/students/gpa"

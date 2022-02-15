@@ -8,7 +8,7 @@ export default function DashboardClassList({ classes, schedule, navigateToClassD
         <ScrollView contentContainerStyle={{flexGrow: 1, justifyContent: "space-evenly"}} style={{paddingHorizontal: 10}}>
           { classes.map((course) => {
             const { name, grade} = course;
-            const color = parseFloat(grade) >= 90 ? "#30d158" : parseFloat(grade) >= 80 ? "#ffd60a" : "#ff443a";
+            const color = parseFloat(grade) == 100 ? "#00C692" : parseFloat(grade) >= 90 ? "#00C801" : parseFloat(grade) >= 80 ? "#FFC857" : "#EC5E2A";
             const courseInfo = schedule.find((elm) => elm.courseName === course.name)
           
             return (
