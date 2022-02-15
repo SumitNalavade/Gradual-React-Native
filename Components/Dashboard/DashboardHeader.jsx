@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 
 export default function DashboardHeader({ info, finalWeightedGPA, finalUnweightedGPA }) {
@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
     container: {
         display: "flex",
         flexDirection: "column",
-        padding: 20
+        padding: 20,
+        paddingTop: 30
     },
 
     upperContainer: {

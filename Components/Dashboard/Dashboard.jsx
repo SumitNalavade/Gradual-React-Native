@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, View } from "react-native";
 
 import DashboardHeader from "./DashboardHeader";
 import DashboardClassList from "./DashboardClassList";
@@ -26,7 +26,7 @@ export default function Dashboard({ route, navigation }) {
     }, [])
 
     return (
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView style={{flex: 1, backgroundColor: "white" }}>
             <DashboardHeader info={info} finalWeightedGPA={finalWeightedGPA.toFixed(3)} finalUnweightedGPA={finalUnweightedGPA.toFixed(3)} />
             <DashboardClassList classes={classes} />
         </SafeAreaView>

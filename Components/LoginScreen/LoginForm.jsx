@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { StyleSheet, View, TextInput} from 'react-native';
+import { StyleSheet, View, TextInput, Text} from 'react-native';
 import { Button } from "react-native-elements";
 
 export default function LoginForm({loginFormSubmitted, isLoading}) {

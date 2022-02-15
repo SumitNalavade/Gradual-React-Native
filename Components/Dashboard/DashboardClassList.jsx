@@ -1,26 +1,32 @@
 import React from 'react';
 import { useEffect } from 'react';
-import { FlatList, StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { Divider } from "react-native-elements";
+import Badge from './Badge';
 
 export default function DashboardClassList({ classes }) {
-
-    const array = [];
-    let counter = 0;
-    classes.forEach((course) => {
-        array.push({
-            key: course["name"],
-            name: course["name"]
-        })
-
-        counter += 1;
-    });
     
+    useEffect(() => {
+      try{
+        classes.forEach((course) => course.name = course.name.split("-")[1].substring(2).trim());
+      } catch {
+        console.log("Split Error");
+      }
+    }, [])
+
     return (
         <ScrollView contentContainerStyle={{flex:1, justifyContent: "space-evenly"}}>
-          { array.map((course) => {
+          { classes.map((course) => {
             return (
-              <View key={course.key} style={{padding: 10}}>
-                  <Text>{course.name}</Text>
+              <View key={classes.indexOf(course)} style={{width: "100%", padding: 10, flexDirection: "row", justifyContent: "space-between"}}>
+                <View style={{width: "70%"}}>
+                  <Text style={{fontSize: 18}}>{course.name}</Text>
+                </View>
+
+                <View style={{width: "30%"}}>
+                  <Badge grade={course.grade}/>
+                </View>
+                  <Divider />
               </View>
             )
           }) }
