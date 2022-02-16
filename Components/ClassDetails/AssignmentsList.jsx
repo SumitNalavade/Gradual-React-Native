@@ -1,10 +1,10 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { Divider } from "react-native-elements";
 
 export default function AssignmentsList({ assignments, type }) {
 
     return (
-        <View style={{padding: 10, marginBottom: 50}}>
+        <SafeAreaView style={{margin: 10, marginBottom: 50}}>
             <Text style={styles.header}>{type}</Text>
             <View>
                 { assignments.map((assignment) => {
@@ -14,7 +14,7 @@ export default function AssignmentsList({ assignments, type }) {
                     return (
                         <View key={assignments.indexOf(assignment)} >
                             <View style={{flexDirection: "row", justifyContent: "space-between", marginVertical: 20}}>
-                                <Text style={{flexWrap: "wrap"}}>{name}</Text>
+                                <Text style={{flexWrap: "wrap", fontSize: 15}}>{name}</Text>
                                 <Text style={{color: color}}>{score}</Text>
                             </View>
                             <Divider />
@@ -22,13 +22,14 @@ export default function AssignmentsList({ assignments, type }) {
                     )
                 }) }
             </View>
-        </View>
+        </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
     header: {
         fontSize: 25,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: "#444444"
     }
 })

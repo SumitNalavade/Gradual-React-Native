@@ -4,6 +4,10 @@ import AssignmentsList from "./AssignmentsList";
 import ClassInformation from "./ClassInformation";
 
 export default function ClassDetails({ navigation, route }) {
+    useEffect(() => {
+        navigation.setOptions({ title: course.courseName, headerStyle: { backgroundColor: "#30d158" }, headerTintColor: "white" })
+    }, [])
+    
     const { course } = route.params;
 
     const allMajorAssignments = course["assignments"].filter(assignment => assignment["category"] === "Major Grades")
@@ -11,18 +15,16 @@ export default function ClassDetails({ navigation, route }) {
 
     const validMajorAssignments = allMajorAssignments.filter(assignment => parseFloat(assignment["score"]));
     const validMinorAssignments = allMinorAssignments.filter(assignment => parseFloat(assignment["score"]));
+    const nonValidAssignments = course["assignments"].filter(assignment => assignment["category"] === "Non-graded")
 
     const majorAssignmentsGrade = validMajorAssignments.reduce((previousValue, currentValue) => (previousValue += parseFloat(currentValue["score"])/validMajorAssignments.length), 0);
     const minorAssignmentsGrade = validMinorAssignments.reduce((previousValue, currentValue) => previousValue += parseFloat(currentValue["score"]/validMinorAssignments.length), 0)
 
-    useEffect(() => {
-        navigation.setOptions({ title: course.courseName, headerStyle: { backgroundColor: "#30d158" }, headerTintColor: "white" })
-    }, [])
-
     return (
-        <ScrollView contentContainerStyle={{justifyContent: "space-between"}}>
+        <ScrollView contentContainerStyle={{justifyContent: "space-between"}} style={{backgroundColor: "white"}}>
             <AssignmentsList assignments={allMajorAssignments} type="Major Grades"/>
             <AssignmentsList assignments={allMinorAssignments} type="Minor Grades"/>
+            <AssignmentsList assignments={nonValidAssignments} type="Non Graded"/>
 
             <ClassInformation course={course} />
         </ScrollView>
