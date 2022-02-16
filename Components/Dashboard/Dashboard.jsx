@@ -23,11 +23,14 @@ export default function Dashboard({ route, navigation }) {
         return navigation.navigate("Class Details", { course: { ...course, ...courseInfo } })
     }
 
+    const navigateToProfile = () => {
+        return navigation.navigate("Profile");
+    }
 
     return (
-        <View style={{flex: 1, backgroundColor: "white" }}>
-            <DashboardHeader info={info} finalWeightedGPA={finalWeightedGPA.toFixed(3)} finalUnweightedGPA={finalUnweightedGPA.toFixed(3)} />
+        <SafeAreaView style={{flex: 1, backgroundColor: "white" }}>
+            <DashboardHeader info={info} finalWeightedGPA={finalWeightedGPA.toFixed(3)} finalUnweightedGPA={finalUnweightedGPA.toFixed(3)} navigateToProfile={navigateToProfile} />
             <DashboardClassList classes={classes} schedule={schedule} navigateToClassDetails={navigateToClassDetails} />
-        </View>
+        </SafeAreaView>
     )
 }

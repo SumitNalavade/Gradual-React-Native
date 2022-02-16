@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from './Components/LoginScreen/LoginScreen';
 import Dashboard from './Components/Dashboard/Dashboard';
 import ClassDetails from './Components/ClassDetails/ClassDetails';
+import Profile from './Components/Profile/Profile';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,8 @@ export default function App() {
       <Stack.Screen name="Dashboard" component={Dashboard} options={{headerShown: false}}/>
 
       <Stack.Screen name="Class Details" component={ClassDetails} options={{headerShown: true}}/>
+
+      <Stack.Screen name="Profile" component={Profile} options={{headerShown: true}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

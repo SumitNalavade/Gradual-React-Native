@@ -688,10 +688,10 @@ export default function LoginScreen({ navigation }) {
 
     const loginFormSubmitted = async (username, password) => {    
         setIsLoading(true)
-        
+    
         setIsLoading(false);
         return navigation.navigate("Dashboard", { student: { ...student, finalWeightedGPA, finalUnweightedGPA } })
-
+        
         try {
           await Promise.all([getStudentData(username, password, infoURL), getStudentData(username, password, scheduleURL), getStudentData(username, password, currentClassesURL)]).then((values) => {
             updateStudentData(values[0], "info");

@@ -1,7 +1,7 @@
-import { View, Text, StyleSheet, SafeAreaView } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 
-export default function DashboardHeader({ info, finalWeightedGPA, finalUnweightedGPA }) {
+export default function DashboardHeader({ info, finalWeightedGPA, finalUnweightedGPA, navigateToProfile }) {
     const studentName = info["name"].split(" ")[1];
     
     const currentHour = new Date().getHours()
@@ -10,7 +10,9 @@ export default function DashboardHeader({ info, finalWeightedGPA, finalUnweighte
     return (
         <View style={[styles.container, styles.shadowProp]}>
             <View style={styles.upperContainer}>
-                <Ionicons name="person-outline" size={24} color="black" />
+                <TouchableOpacity onPress={() => navigateToProfile()}>
+                    <Ionicons name="person-outline" size={24} color="black" />
+                </TouchableOpacity>
             </View>
 
             <Text style={styles.greetingText}>{greeting} {studentName}</Text>
