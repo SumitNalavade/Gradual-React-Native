@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Divider } from "react-native-elements";
-import SelectDropdown from 'react-native-select-dropdown'
 import Dropdown from "./Dropdown";
+import { AntDesign } from '@expo/vector-icons';
 
 export default function CoursesInfo( { courses } ) {
     const credits = [0.5, 1, 2]
@@ -20,16 +20,22 @@ export default function CoursesInfo( { courses } ) {
                     <View key={courses.indexOf(course)} style={{marginVertical: 15}}>
                         <Text style={{fontSize: 15, fontWeight: "bold", color: "#444444", marginBottom: 10}}>{courseName}</Text>
 
-                        <View style={{flexDirection: "row", marginVertical: 15}}>
-                            <Text style={{width: "50%", color: "#444444"}}>Weight</Text>
-                            <Dropdown data={weights} defaultValue={String(course.weight)}/>
+                        <View style={{flexDirection: "row", marginVertical: 10}}>
+                            <Text style={{width: "80%", color: "#444444"}}>Weight</Text>
+                            <View style={{flexDirection: "row", backgroundColor: "#00C801", borderRadius: 10, alignItems: "center", paddingHorizontal: 5}}>
+                                <Dropdown data={weights} defaultValue={String(course.weight)}/>
+                                <AntDesign name="caretdown" size={20} color="white" />
+                            </View> 
                         </View>
 
                 <Divider />
 
-                        <View style={{flexDirection: "row", marginVertical: 15}}>
-                            <Text style={{width: "50%", color: "#444444"}}>Credits</Text>
-                            <Dropdown data={credits} defaultValue={String(course.credits)}/>
+                        <View style={{flexDirection: "row", marginVertical: 10}}>
+                            <Text style={{width: "80%", color: "#444444"}}>Credits</Text>
+                            <View style={{flexDirection: "row", backgroundColor: "#00C801", borderRadius: 10, alignItems: "center", paddingHorizontal: 5}}>
+                                <Dropdown data={credits} defaultValue={String(course.credits)}/>
+                                <AntDesign name="caretdown" size={20} color="white" />
+                            </View>
                         </View>
 
                         <Divider />

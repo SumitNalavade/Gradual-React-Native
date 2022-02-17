@@ -19,7 +19,7 @@ export default function DashboardHeader({ info, finalWeightedGPA, finalUnweighte
 
             <View style={{marginTop: 10}}>
                 <Text>Weighted GPA: {finalWeightedGPA}</Text>
-                <Text>Weighted GPA: {finalUnweightedGPA}</Text>
+                <Text>Unweighted GPA: {finalUnweightedGPA}</Text>
             </View>
         </View>
     )

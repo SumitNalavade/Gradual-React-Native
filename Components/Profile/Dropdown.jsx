@@ -1,6 +1,8 @@
 import { StyleSheet } from "react-native";
 import SelectDropdown from 'react-native-select-dropdown'
 
+
+
 export default function Dropdown({ data, defaultValue }) {
     return (
         <SelectDropdown
@@ -28,13 +30,13 @@ export default function Dropdown({ data, defaultValue }) {
 const styles = StyleSheet.create({
     dropdownButton: {
         height: 30,
-        borderColor: "black",
-        borderWidth: 1,
-        borderRadius: 8,
-        backgroundColor: "white"
+        backgroundColor: "transparent",
+        width: 50
     },
 
     dropdownText: {
-        fontSize: 15
+        fontSize: 15,
+        color: "white",
+        fontWeight: "bold"
     }
 })
