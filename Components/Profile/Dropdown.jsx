@@ -3,7 +3,7 @@ import SelectDropdown from 'react-native-select-dropdown'
 
 
 
-export default function Dropdown({ data, defaultValue }) {
+export default function Dropdown({ data, defaultValue, courseName }) {
     return (
         <SelectDropdown
         data={data}

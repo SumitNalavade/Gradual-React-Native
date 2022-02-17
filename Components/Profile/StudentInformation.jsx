@@ -4,7 +4,7 @@ import { Divider } from "react-native-elements";
 export default function StudentInfo({ studentInfo }) {
 
     const { id, grade, campus, birthdate } = studentInfo
-    
+
     return (
         <View style={{margin: 20, backgroundColor: "white", padding: 20, borderRadius: 10}}>
 

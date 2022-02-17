@@ -14,8 +14,6 @@ export default function CoursesInfo( { courses } ) {
             {courses.map((course) => {
                 const courseName = course.name.split("-")[1].substring(2).trim();
 
-                console.log(course);
-
                 return (
                     <View key={courses.indexOf(course)} style={{marginVertical: 15}}>
                         <Text style={{fontSize: 15, fontWeight: "bold", color: "#444444", marginBottom: 10}}>{courseName}</Text>
@@ -23,7 +21,7 @@ export default function CoursesInfo( { courses } ) {
                         <View style={{flexDirection: "row", marginVertical: 10}}>
                             <Text style={{width: "80%", color: "#444444"}}>Weight</Text>
                             <View style={{flexDirection: "row", backgroundColor: "#00C801", borderRadius: 10, alignItems: "center", paddingHorizontal: 5}}>
-                                <Dropdown data={weights} defaultValue={String(course.weight)}/>
+                                <Dropdown data={weights} defaultValue={String(course.weight)} courseName={courseName}/>
                                 <AntDesign name="caretdown" size={20} color="white" />
                             </View> 
                         </View>
@@ -33,7 +31,7 @@ export default function CoursesInfo( { courses } ) {
                         <View style={{flexDirection: "row", marginVertical: 10}}>
                             <Text style={{width: "80%", color: "#444444"}}>Credits</Text>
                             <View style={{flexDirection: "row", backgroundColor: "#00C801", borderRadius: 10, alignItems: "center", paddingHorizontal: 5}}>
-                                <Dropdown data={credits} defaultValue={String(course.credits)}/>
+                                <Dropdown data={credits} defaultValue={String(course.credits)} courseName={courseName}/>
                                 <AntDesign name="caretdown" size={20} color="white" />
                             </View>
                         </View>

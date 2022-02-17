@@ -26,7 +26,7 @@ export default function Dashboard({ route, navigation }) {
     const navigateToProfile = () => {
         return navigation.navigate("Profile", { student: student });
     }
-
+      
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: "white" }}>
             <DashboardHeader info={info} finalWeightedGPA={finalWeightedGPA.toFixed(3)} finalUnweightedGPA={finalUnweightedGPA.toFixed(3)} navigateToProfile={navigateToProfile} />

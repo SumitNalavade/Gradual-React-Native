@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, SafeAreaView} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import gradualIcon from "../../assets/gradualIcon.png";
 
 import LoginForm from './LoginForm';
@@ -686,10 +687,22 @@ export default function LoginScreen({ navigation }) {
       ]
     }
 
+    const storeStudent = async (value) => {
+        try {
+          const jsonValue = JSON.stringify(value)
+          await AsyncStorage.setItem('student', jsonValue)
+        } catch (e) {
+          // saving error
+        }
+    }
+
     const loginFormSubmitted = async (username, password) => {    
         setIsLoading(true)
         
         setIsLoading(false);
+        
+        await storeStudent(student);
+        
         return navigation.navigate("Dashboard", { student: { ...student, finalWeightedGPA, finalUnweightedGPA } })
 
         try {
