@@ -24,7 +24,7 @@ export default function Dashboard({ route, navigation }) {
     }
 
     const navigateToProfile = () => {
-        return navigation.navigate("Profile", { studentInfo: student.info });
+        return navigation.navigate("Profile", { student: student });
     }
 
     return (
