@@ -4,11 +4,22 @@ import SelectDropdown from 'react-native-select-dropdown'
 
 
 export default function Dropdown({ data, defaultValue, courseName }) {
+
+    const updateInfo = async(selectedItem) => {
+        try {
+            var student = await AsyncStorage.getItem('student')
+            student != null ? JSON.parse(student) : null;
+            console.log(student);
+          } catch(e) {
+            // error reading value
+          }
+    }
+
     return (
         <SelectDropdown
         data={data}
         onSelect={(selectedItem, index) => {
-            console.log(selectedItem, index)
+            updateInfo(selectedItem);
         }}
         buttonTextAfterSelection={(selectedItem, index) => {
             // text represented after item is selected
