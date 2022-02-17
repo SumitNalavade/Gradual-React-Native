@@ -38,7 +38,7 @@ const Donut = ({ percentage }) => {
           </G>
         </Svg>
         <View style={{position: "absolute"}}>
-          <Text style={[styles.text, { fontSize: 20 }]}>{percentage}</Text>
+          <Text style={[styles.text, { fontSize: 28 }]}>{percentage}</Text>
           <Text style={[styles.text, { fontSize: 15 }]}>Class Average</Text>
         </View>
       </View>
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: "center",
-    fontWeight: "600",
-    color: "#394867",
+    fontWeight: "bold",
+    color: "#444444",
   },
 });
