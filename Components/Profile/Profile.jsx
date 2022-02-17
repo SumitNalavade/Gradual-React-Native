@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { TouchableOpacity, Text, View, SafeAreaView } from "react-native";
+import { TouchableOpacity, Text, ScrollView, SafeAreaView } from "react-native";
 import StudentInfo from "./StudentInformation.jsx";
 import CoursesInfo from "./CoursesInformation.jsx";
 
@@ -19,16 +19,15 @@ export default function Profile({ navigation, route }) {
     return (
 
         <SafeAreaView >
-            <StudentInfo studentInfo={info}/>
+            <ScrollView>
+                <StudentInfo studentInfo={info}/>
 
-            <CoursesInfo courses={classes} />
+                <CoursesInfo courses={classes} />
 
-            <TouchableOpacity onPress={() => navigateToHome()}>
-                <Text style={{color: "red", textAlign: "center", marginTop: 40, width: "90%", backgroundColor: "white", margin: "auto", padding: 10, borderRadius: 10}}>Sign Out</Text>
-            </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigateToHome()}>
+                    <Text style={{color: "red", textAlign: "center", marginTop: 40, width: "90%", backgroundColor: "white", margin: "auto", padding: 10, borderRadius: 10}}>Sign Out</Text>
+                </TouchableOpacity>
+            </ScrollView>
         </SafeAreaView>
-
-
-        
     )
 }

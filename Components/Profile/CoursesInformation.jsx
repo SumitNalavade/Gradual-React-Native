@@ -1,10 +1,10 @@
-import { View, ScrollView, Text } from "react-native";
+import { View, Text } from "react-native";
 import { Divider } from "react-native-elements";
 
 
 export default function CoursesInfo( { courses } ) {    
     return (
-        <ScrollView style={{backgroundColor: "white"}}>
+        <View style={{backgroundColor: "white"}}>
             {courses.map((course) => {
                 const courseName = course.name.split("-")[1].substring(2).trim();
 
@@ -26,6 +26,6 @@ export default function CoursesInfo( { courses } ) {
                     </View>
                 )
             })}
-        </ScrollView>
+        </View>
     )
 }
