@@ -9,25 +9,26 @@ export default function CoursesInfo( { courses } ) {
     const weights = [5, 5.5, 6]
     
     return (
-        <View style={{backgroundColor: "white"}}>
+        <View style={{backgroundColor: "white", padding: 8}}>
+            <Text style={{fontSize: 25, fontWeight: "bold", marginBottom: 15, color: "#444444"}}>Scales</Text>
             {courses.map((course) => {
                 const courseName = course.name.split("-")[1].substring(2).trim();
 
                 console.log(course);
 
                 return (
-                    <View style={{padding: 8}} key={courses.indexOf(course)}>
-                        <Text style={{fontSize: 15, fontWeight: "bold"}}>{courseName}</Text>
+                    <View key={courses.indexOf(course)} style={{marginVertical: 15}}>
+                        <Text style={{fontSize: 15, fontWeight: "bold", color: "#444444", marginBottom: 10}}>{courseName}</Text>
 
                         <View style={{flexDirection: "row", marginVertical: 15}}>
-                            <Text style={{width: "50%"}}>Weight</Text>
+                            <Text style={{width: "50%", color: "#444444"}}>Weight</Text>
                             <Dropdown data={weights} defaultValue={String(course.weight)}/>
                         </View>
 
                 <Divider />
 
                         <View style={{flexDirection: "row", marginVertical: 15}}>
-                            <Text style={{width: "50%"}}>Credits</Text>
+                            <Text style={{width: "50%", color: "#444444"}}>Credits</Text>
                             <Dropdown data={credits} defaultValue={String(course.credits)}/>
                         </View>
 
@@ -38,3 +39,9 @@ export default function CoursesInfo( { courses } ) {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    label: {
+        color: "#888"
+    }
+})
