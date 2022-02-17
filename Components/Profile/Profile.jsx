@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { TouchableOpacity, Text, ScrollView, SafeAreaView } from "react-native";
+import { TouchableOpacity, Text, ScrollView, SafeAreaView, StyleSheet } from "react-native";
 import StudentInfo from "./StudentInformation.jsx";
 import CoursesInfo from "./CoursesInformation.jsx";
 
@@ -24,10 +24,22 @@ export default function Profile({ navigation, route }) {
 
                 <CoursesInfo courses={classes} />
 
-                <TouchableOpacity onPress={() => navigateToHome()}>
-                    <Text style={{color: "red", textAlign: "center", marginTop: 40, width: "90%", backgroundColor: "white", margin: "auto", padding: 10, borderRadius: 10}}>Sign Out</Text>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => navigateToHome()}>
+                    <Text style={{color: "red"}}>Sign out</Text>
                 </TouchableOpacity>
             </ScrollView>
         </SafeAreaView>
     )
 }
+
+const styles = StyleSheet.create({
+    button: {
+      alignItems: "center",
+      backgroundColor: "white",
+      padding: 15,
+      margin: 20,
+      borderRadius: 10
+    }
+  });
