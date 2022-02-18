@@ -21,7 +21,7 @@ export default function CoursesInfo( { courses } ) {
                         <View style={{flexDirection: "row", marginVertical: 10}}>
                             <Text style={{width: "80%", color: "#444444"}}>Weight</Text>
                             <View style={{flexDirection: "row", backgroundColor: "#00C801", borderRadius: 10, alignItems: "center", paddingHorizontal: 5}}>
-                                <Dropdown data={weights} defaultValue={String(course.weight)} courseName={courseName}/>
+                                <Dropdown data={weights} defaultValue={String(course.weight)} courseName={course.name} type="weight"/>
                                 <AntDesign name="caretdown" size={20} color="white" />
                             </View> 
                         </View>
@@ -31,7 +31,7 @@ export default function CoursesInfo( { courses } ) {
                         <View style={{flexDirection: "row", marginVertical: 10}}>
                             <Text style={{width: "80%", color: "#444444"}}>Credits</Text>
                             <View style={{flexDirection: "row", backgroundColor: "#00C801", borderRadius: 10, alignItems: "center", paddingHorizontal: 5}}>
-                                <Dropdown data={credits} defaultValue={String(course.credits)} courseName={courseName}/>
+                                <Dropdown data={credits} defaultValue={String(course.credits)} courseName={course.name} type="credits"/>
                                 <AntDesign name="caretdown" size={20} color="white" />
                             </View>
                         </View>

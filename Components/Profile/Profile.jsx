@@ -17,18 +17,24 @@ export default function Profile({ navigation, route }) {
         }
     }
 
-
     const navigateToHome = () => {
+        AsyncStorage.clear();
+
         return navigation.navigate("Home")
     };
 
     useEffect( async () => {
-        const { student } = route.params;
+        const student = await getData();
+
+        if(!student) {
+            student = route.params.student
+        }
+        
         setStudent(student);
+
         navigation.setOptions({ title: student.info.name });
     }, [])
 
-    console.log(student.info);
 
     return (
         <SafeAreaView >

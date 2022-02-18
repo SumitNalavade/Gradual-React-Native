@@ -11,11 +11,20 @@ export default function LoginScreen({ navigation }) {
     const [isLoading, setIsLoading] = useState(false);
 
     const student = {
-        info: "",
-        schedule: "",
-        gpa: 0,
-        classes: ""
-      }
+      info: "",
+      schedule: "",
+      gpa: 0,
+      classes: ""
+    }
+
+    const getLocalData = async() => {
+      try {
+          const jsonValue = await AsyncStorage.getItem('student')
+          return jsonValue != null ? JSON.parse(jsonValue) : null;
+        } catch(e) {
+          console.log(e);
+        }
+    }
 
     const storeStudent = async (value) => {
         try {
@@ -28,12 +37,6 @@ export default function LoginScreen({ navigation }) {
 
     const loginFormSubmitted = async (username, password) => {    
         setIsLoading(true)
-        
-        // setIsLoading(false);
-        
-        // await storeStudent(student);
-        
-        // return navigation.navigate("Dashboard", { student: { ...student, finalWeightedGPA, finalUnweightedGPA } })
 
         try {
           await Promise.all([getStudentData(username, password, infoURL), getStudentData(username, password, scheduleURL), getStudentData(username, password, currentClassesURL)]).then((values) => {
@@ -54,7 +57,8 @@ export default function LoginScreen({ navigation }) {
         } finally {
             setIsLoading(false)
         }
-        
+
+        if(! await getLocalData()) { await storeStudent(student) }    
         return navigation.navigate("Dashboard", { student: { ...student, finalWeightedGPA, finalUnweightedGPA } })
      };
 

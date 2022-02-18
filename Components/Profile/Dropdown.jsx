@@ -1,25 +1,46 @@
+import { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import SelectDropdown from 'react-native-select-dropdown'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+export default function Dropdown({ data, defaultValue, courseName, type }) {
 
+    useEffect(async () => {
+        const student = await getStudentData();
 
-export default function Dropdown({ data, defaultValue, courseName }) {
+        const studentToUpdateIndex = student.classes.findIndex(course => course.name === courseName);
+        defaultValue = (student.classes[studentToUpdateIndex][type])
+    }, [])
 
-    const updateInfo = async(selectedItem) => {
+    const getStudentData = async() => {
         try {
-            var student = await AsyncStorage.getItem('student')
-            student != null ? JSON.parse(student) : null;
-            console.log(student);
+            const jsonValue = await AsyncStorage.getItem('student')
+            return jsonValue != null ? JSON.parse(jsonValue) : null;
           } catch(e) {
             // error reading value
           }
+    }
+
+    const updateStudent = async(selectedItem) => {
+        const student = await getStudentData();
+
+        const studentToUpdateIndex = student.classes.findIndex(course => course.name === courseName);
+        
+        if([0.5, 1, 2].includes(selectedItem)) {
+            student.classes[studentToUpdateIndex].credits = parseFloat(selectedItem)
+        } else {
+            student.classes[studentToUpdateIndex].weight = parseFloat(selectedItem)
+        }
+
+        const jsonValue = JSON.stringify(student)
+        await AsyncStorage.setItem('student', jsonValue)
     }
 
     return (
         <SelectDropdown
         data={data}
         onSelect={(selectedItem, index) => {
-            updateInfo(selectedItem);
+            updateStudent(selectedItem);
         }}
         buttonTextAfterSelection={(selectedItem, index) => {
             // text represented after item is selected
