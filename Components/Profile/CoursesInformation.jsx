@@ -1,9 +1,9 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Divider } from "react-native-elements";
 import Dropdown from "./Dropdown";
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, Ionicons } from '@expo/vector-icons';
 
-export default function CoursesInfo( { courses, student, updateStudent } ) {
+export default function CoursesInfo( { courses, student, updateStudent, toggleClass } ) {
     const credits = [0.5, 1, 2]
     const weights = [5, 5.5, 6]
     
@@ -14,7 +14,10 @@ export default function CoursesInfo( { courses, student, updateStudent } ) {
                 const courseName = course.name.split("-")[1].substring(2).trim();
 
                 return (
-                    <View key={courses.indexOf(course)} style={{marginVertical: 15}}>
+                    <View key={courses.indexOf(course)} style={[ {marginVertical: 15} ,course.disabled ? styles.disabled : ""]}>
+                        <TouchableOpacity onPress={() => toggleClass(course)}>
+                            <Ionicons name="remove-circle-outline" size={24} color="red" />
+                        </TouchableOpacity>
                         <Text style={{fontSize: 15, fontWeight: "bold", color: "#444444", marginBottom: 10}}>{courseName}</Text>
 
                         <View style={{flexDirection: "row", marginVertical: 10}}>
@@ -46,5 +49,13 @@ export default function CoursesInfo( { courses, student, updateStudent } ) {
 const styles = StyleSheet.create({
     label: {
         color: "#888"
+    },
+
+    disabled: {
+        opacity: 0.5
+    },
+
+    enabled: {
+        backgroundColor: "green"
     }
 })

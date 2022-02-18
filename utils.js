@@ -1,12 +1,11 @@
 import axios from "axios"
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export async function getPredictedGPA(student) {
     let {weightedGPA, unweightedGPA} = student.gpa;
     let {grade} = student.info;
     let {classes} = student
 
-    classes = classes.filter(course => parseFloat(course.grade));
+    classes = classes.filter(course => parseFloat(course.grade) && !course.disabled);
     classes.forEach((course) => {
         course.credits = parseFloat(course.credits);
         course.grade = parseFloat(course.grade);

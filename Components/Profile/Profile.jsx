@@ -25,7 +25,21 @@ export default function Profile({ navigation, route }) {
 
         setStudent(studentCopy)
         
-        console.log(await getPredictedGPA(studentCopy))
+        const { finalWeightedGPA, finalUnweightedGPA } = await getPredictedGPA(selfStudent);
+
+        alert(finalWeightedGPA)
+        alert(finalUnweightedGPA)
+    }
+
+    const toggleClass = (c) => {
+        const studentCopy = {...selfStudent}
+
+        const courseToUpdateIndex = studentCopy.classes.findIndex(course => course === c);
+        const courseToUpate = studentCopy.classes[courseToUpdateIndex]
+
+        courseToUpate.disabled == false ? courseToUpate.disabled = true : courseToUpate.disabled == true ? courseToUpate.disabled = false : courseToUpate.disabled = true
+
+        setStudent(studentCopy);
     }
 
     return (
@@ -33,7 +47,7 @@ export default function Profile({ navigation, route }) {
             <ScrollView>
                 <StudentInfo studentInfo={student.info}/>
 
-                <CoursesInfo courses={student.classes} student={student} updateStudent={updateStudent}/>
+                <CoursesInfo courses={student.classes} student={student} updateStudent={updateStudent} toggleClass={toggleClass}/>
 
                 <TouchableOpacity
                     style={styles.button}
