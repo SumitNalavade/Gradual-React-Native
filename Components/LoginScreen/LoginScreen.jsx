@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, SafeAreaView} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import gradualIcon from "../../assets/gradualIcon.png";
 
 import LoginForm from './LoginForm';
-import { getStudentData, getPredictedGPA, infoURL, scheduleURL, currentClassesURL, gpaURL } from "../../utils";
+import { getStudentData, infoURL, scheduleURL, currentClassesURL, gpaURL } from "../../utils";
 
 export default function LoginScreen({ navigation }) {
     const [isLoading, setIsLoading] = useState(false);
@@ -15,24 +14,6 @@ export default function LoginScreen({ navigation }) {
       schedule: "",
       gpa: 0,
       classes: ""
-    }
-
-    const getLocalData = async() => {
-      try {
-          const jsonValue = await AsyncStorage.getItem('student')
-          return jsonValue != null ? JSON.parse(jsonValue) : null;
-        } catch(e) {
-          console.log(e);
-        }
-    }
-
-    const storeStudent = async (value) => {
-        try {
-          const jsonValue = JSON.stringify(value)
-          await AsyncStorage.setItem('student', jsonValue)
-        } catch (e) {
-          // saving error
-        }
     }
 
     const loginFormSubmitted = async (username, password) => {    
@@ -51,15 +32,13 @@ export default function LoginScreen({ navigation }) {
     
         try {
           await getStudentData(username, password, gpaURL).then((res) => updateStudentData(res, "gpa"))
-          var { finalWeightedGPA, finalUnweightedGPA } = await getPredictedGPA(student).catch((error) => console.log(error));
         } catch {
           console.log("GPA Fetch Error");
         } finally {
             setIsLoading(false)
         }
 
-        if(! await getLocalData()) { await storeStudent(student) }    
-        return navigation.navigate("Dashboard", { student: { ...student, finalWeightedGPA, finalUnweightedGPA } })
+        return navigation.navigate("Dashboard", { student: { ...student } })
      };
 
 

@@ -20,7 +20,7 @@ export default function App() {
           options={{headerShown: false}}
         />
 
-      <Stack.Screen name="Dashboard" component={Dashboard} options={{headerShown: false}}/>
+      <Stack.Screen name="Dashboard" component={Dashboard} options={{headerShown: true}}/>
 
       <Stack.Screen name="Class Details" component={ClassDetails} options={{headerShown: true}}/>
 

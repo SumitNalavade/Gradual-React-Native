@@ -1,47 +1,39 @@
 import { useEffect, useState } from "react";
 import { TouchableOpacity, Text, ScrollView, SafeAreaView, StyleSheet } from "react-native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import StudentInfo from "./StudentInformation.jsx";
 import CoursesInfo from "./CoursesInformation.jsx";
+import { getPredictedGPA } from "../../utils.js";
 
 export default function Profile({ navigation, route }) {
-
-    const [student, setStudent] = useState(route.params.student);
-
-    const getData = async () => {
-        try {
-        const jsonValue = await AsyncStorage.getItem('student')
-        return jsonValue != null ? JSON.parse(jsonValue) : null;
-        } catch(e) {
-        // error reading value
-        }
-    }
+    const { student } = route.params
+    const [selfStudent, setStudent] = useState(student)
 
     const navigateToHome = () => {
-        AsyncStorage.clear();
-
         return navigation.navigate("Home")
     };
 
     useEffect( async () => {
-        const student = await getData();
-
-        if(!student) {
-            student = route.params.student
-        }
-        
-        setStudent(student);
-
         navigation.setOptions({ title: student.info.name });
     }, [])
 
+    const updateStudent = async(selectedItem, courseName, type) => {
+        const studentCopy = {...selfStudent}
+
+        const studentToUpdateIndex = studentCopy.classes.findIndex(course => course.name === courseName);
+
+        type === "credits" ? studentCopy.classes[studentToUpdateIndex].credits = parseFloat(selectedItem)  : studentCopy.classes[studentToUpdateIndex].weight = parseFloat(selectedItem)
+
+        setStudent(studentCopy)
+        
+        console.log(await getPredictedGPA(studentCopy))
+    }
 
     return (
         <SafeAreaView >
             <ScrollView>
                 <StudentInfo studentInfo={student.info}/>
 
-                <CoursesInfo courses={student.classes} />
+                <CoursesInfo courses={student.classes} student={student} updateStudent={updateStudent}/>
 
                 <TouchableOpacity
                     style={styles.button}
