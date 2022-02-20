@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { TouchableOpacity, Text, ScrollView, SafeAreaView, StyleSheet, View } from "react-native";
-import { Overlay } from "react-native-elements";
 import StudentInfo from "./StudentInformation.jsx";
 import CoursesInfo from "./CoursesInformation.jsx";
+import GPAOverlay from "./GPAOverlay.jsx";
 import { getPredictedGPA } from "../../utils.js";
 
 export default function Profile({ navigation, route }) {
@@ -51,19 +51,8 @@ export default function Profile({ navigation, route }) {
 
     return (
         <SafeAreaView >
-            <Overlay isVisible={isVisible} onBackdropPress={() => setIsVisible(false)} style={styles.overlay}>
-                <View style={{paddingHorizontal: 50, paddingVertical: 30}}>
-                    <View style={{marginVertical: 30, borderRadius: 15}}>
-                        <Text style={{textAlign: "center"}}>Weighted GPA</Text>
-                        <Text style={{fontSize: 25, fontWeight: "bold", textAlign: "center"}}>{GPAS.finalWeightedGPA}</Text>
-                    </View>
 
-                    <View style={{marginVertical: 30}}>
-                        <Text style={{textAlign: "center"}}>Unweighted GPA</Text>
-                        <Text style={{fontSize: 25, fontWeight: "bold", textAlign: "center"}}>{GPAS.finalUnweightedGPA}</Text>
-                    </View>
-                </View>
-            </Overlay>
+            <GPAOverlay isVisible={isVisible} setIsVisible={setIsVisible} setGPAS={setGPAS} gpas={GPAS} />
 
             <ScrollView>
                 <StudentInfo studentInfo={student.info}/>
@@ -87,9 +76,5 @@ const styles = StyleSheet.create({
       padding: 15,
       margin: 20,
       borderRadius: 10
-    },
-
-    overlay: {
-        width: 300
     }
   });
