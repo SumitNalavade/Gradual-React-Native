@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { Divider } from "react-native-elements";
 
-export default function AssignmentsList({ assignments, type, totalGrade }) {
+export default function AssignmentsList({ assignments, type }) {
     return (
         <SafeAreaView style={{margin: 10, marginBottom: 50}}>
            <Text style={[styles.header, { color: "#444444" }]}>{type}</Text>

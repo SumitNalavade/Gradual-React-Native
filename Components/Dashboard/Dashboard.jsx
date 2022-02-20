@@ -7,7 +7,6 @@ import DashboardClassList from "./DashboardClassList";
 
 export default function Dashboard({ route, navigation }) {
     const { student } = route.params;
-    const {info, classes, schedule } = student
     
     useEffect(() => {    
         navigation.setOptions({ title: ``, headerStyle: { backgroundColor: "#30d158" }, headerTintColor: "white", headerRight: () => <TouchableOpacity onPress={() => navigateToProfile()}>
@@ -25,8 +24,8 @@ export default function Dashboard({ route, navigation }) {
       
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: "white" }}>
-            <DashboardHeader student={student} info={info} navigateToProfile={navigateToProfile} />
-            <DashboardClassList classes={classes} schedule={schedule} navigateToClassDetails={navigateToClassDetails} />
+            <DashboardHeader student={student} navigateToProfile={navigateToProfile} />
+            <DashboardClassList student={student} navigateToClassDetails={navigateToClassDetails} />
         </SafeAreaView>
     )
 }

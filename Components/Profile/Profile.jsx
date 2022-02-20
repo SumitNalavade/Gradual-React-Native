@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { TouchableOpacity, Text, ScrollView, SafeAreaView, StyleSheet } from "react-native";
+import { TouchableOpacity, Text, ScrollView, SafeAreaView, StyleSheet, View } from "react-native";
+import { Overlay } from "react-native-elements";
 import StudentInfo from "./StudentInformation.jsx";
 import CoursesInfo from "./CoursesInformation.jsx";
 import { getPredictedGPA } from "../../utils.js";
@@ -7,6 +8,9 @@ import { getPredictedGPA } from "../../utils.js";
 export default function Profile({ navigation, route }) {
     const { student } = route.params
     const [selfStudent, setStudent] = useState(student)
+    const [GPAS, setGPAS] = useState({finalWeightedGPA: "...", finalUnweightedGPA: "..."  })
+
+    const [isVisible, setIsVisible] = useState(false)
 
     const navigateToHome = () => {
         return navigation.navigate("Home")
@@ -24,11 +28,6 @@ export default function Profile({ navigation, route }) {
         type === "credits" ? studentCopy.classes[studentToUpdateIndex].credits = parseFloat(selectedItem)  : studentCopy.classes[studentToUpdateIndex].weight = parseFloat(selectedItem)
 
         setStudent(studentCopy)
-        
-        const { finalWeightedGPA, finalUnweightedGPA } = await getPredictedGPA(selfStudent);
-
-        alert(finalWeightedGPA)
-        alert(finalUnweightedGPA)
     }
 
     const toggleClass = (c) => {
@@ -42,12 +41,34 @@ export default function Profile({ navigation, route }) {
         setStudent(studentCopy);
     }
 
+    const predictGPA = async() => {
+        setIsVisible(true);
+
+        let { finalWeightedGPA, finalUnweightedGPA } = await getPredictedGPA(selfStudent)
+
+        setGPAS({finalWeightedGPA: finalWeightedGPA.toFixed(3), finalUnweightedGPA: finalUnweightedGPA.toFixed(3)})
+    }
+
     return (
         <SafeAreaView >
+            <Overlay isVisible={isVisible} onBackdropPress={() => setIsVisible(false)} style={styles.overlay}>
+                <View style={{paddingHorizontal: 50, paddingVertical: 30}}>
+                    <View style={{marginVertical: 30, borderRadius: 15}}>
+                        <Text style={{textAlign: "center"}}>Weighted GPA</Text>
+                        <Text style={{fontSize: 25, fontWeight: "bold", textAlign: "center"}}>{GPAS.finalWeightedGPA}</Text>
+                    </View>
+
+                    <View style={{marginVertical: 30}}>
+                        <Text style={{textAlign: "center"}}>Unweighted GPA</Text>
+                        <Text style={{fontSize: 25, fontWeight: "bold", textAlign: "center"}}>{GPAS.finalUnweightedGPA}</Text>
+                    </View>
+                </View>
+            </Overlay>
+
             <ScrollView>
                 <StudentInfo studentInfo={student.info}/>
 
-                <CoursesInfo courses={student.classes} student={student} updateStudent={updateStudent} toggleClass={toggleClass}/>
+                <CoursesInfo student={student} updateStudent={updateStudent} toggleClass={toggleClass} predictGPA={predictGPA}/>
 
                 <TouchableOpacity
                     style={styles.button}
@@ -66,5 +87,9 @@ const styles = StyleSheet.create({
       padding: 15,
       margin: 20,
       borderRadius: 10
+    },
+
+    overlay: {
+        width: 300
     }
   });

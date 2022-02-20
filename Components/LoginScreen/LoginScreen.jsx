@@ -10,10 +10,10 @@ export default function LoginScreen({ navigation }) {
     const [isLoading, setIsLoading] = useState(false);
 
     const student = {
-      info: "",
-      schedule: "",
-      gpa: 0,
-      classes: ""
+        info: "",
+        schedule: "",
+        gpa: 0,
+        classes: ""
     }
 
     const loginFormSubmitted = async (username, password) => {    

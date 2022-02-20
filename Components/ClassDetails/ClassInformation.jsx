@@ -4,7 +4,6 @@ import { Divider } from "react-native-elements";
 export default function ClassInformation({ course }) {
 
     const { teacher, building, periods, room, credits, weight } = course
-    console.log(weight);
 
     return (
         <SafeAreaView style={{marginHorizontal: 10}}>

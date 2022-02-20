@@ -1,42 +1,29 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Divider } from "react-native-elements";
-import Dropdown from "./Dropdown";
-import { AntDesign, Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+import CreditsWeightSelect from "./CreditsWeightSelect";
 
-export default function CoursesInfo( { courses, student, updateStudent, toggleClass } ) {
-    const credits = [0.5, 1, 2]
-    const weights = [5, 5.5, 6]
-    
+export default function CoursesInfo( { student, updateStudent, toggleClass, predictGPA } ) {
     return (
         <View style={{backgroundColor: "white", padding: 8}}>
-            <Text style={{fontSize: 25, fontWeight: "bold", marginBottom: 15, color: "#444444"}}>Scales</Text>
-            {courses.map((course) => {
+            <TouchableOpacity style={styles.button} onPress={() => predictGPA()}>
+                    <Text style={{color: "white", fontWeight: "bold"}}>Predict GPA</Text>
+                </TouchableOpacity>
+            {student.classes.map((course) => {
                 const courseName = course.name.split("-")[1].substring(2).trim();
 
                 return (
-                    <View key={courses.indexOf(course)} style={[ {marginVertical: 15} ,course.disabled ? styles.disabled : ""]}>
+                    <View key={student.classes.indexOf(course)} style={[ {marginVertical: 15} ,course.disabled ? styles.disabled : ""]}>
                         <TouchableOpacity onPress={() => toggleClass(course)}>
                             <Ionicons name="remove-circle-outline" size={24} color="red" />
                         </TouchableOpacity>
                         <Text style={{fontSize: 15, fontWeight: "bold", color: "#444444", marginBottom: 10}}>{courseName}</Text>
 
-                        <View style={{flexDirection: "row", marginVertical: 10}}>
-                            <Text style={{width: "80%", color: "#444444"}}>Weight</Text>
-                            <View style={{flexDirection: "row", backgroundColor: "#00C801", borderRadius: 10, alignItems: "center", paddingHorizontal: 5}}>
-                                <Dropdown data={weights} defaultValue={String(course.weight)} courseName={course.name} student={student} updateStudent={updateStudent} type="weight"/>
-                                <AntDesign name="caretdown" size={20} color="white" />
-                            </View> 
-                        </View>
+                        <CreditsWeightSelect type="Weight" course={course} student={student} updateStudent={updateStudent} />
 
-                <Divider />
+                            <Divider />
 
-                        <View style={{flexDirection: "row", marginVertical: 10}}>
-                            <Text style={{width: "80%", color: "#444444"}}>Credits</Text>
-                            <View style={{flexDirection: "row", backgroundColor: "#00C801", borderRadius: 10, alignItems: "center", paddingHorizontal: 5}}>
-                                <Dropdown data={credits} defaultValue={String(course.credits)} courseName={course.name} student={student} updateStudent={updateStudent} type="credits"/>
-                                <AntDesign name="caretdown" size={20} color="white" />
-                            </View>
-                        </View>
+                        <CreditsWeightSelect type="Credits" course={course} student={student} updateStudent={updateStudent} />
 
                         <Divider />
                     </View>
@@ -54,8 +41,12 @@ const styles = StyleSheet.create({
     disabled: {
         opacity: 0.5
     },
-
-    enabled: {
-        backgroundColor: "green"
+    
+    button: {
+      alignItems: "center",
+      backgroundColor: "#00C801",
+      padding: 10,
+      borderRadius: 10,
+      alignSelf: "flex-end",
     }
 })
