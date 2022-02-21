@@ -6,7 +6,7 @@ import Donut from "./Donut";
 export default function ClassDetails({ navigation, route }) {
     const [doomsdayCalcActive, setDoomsdayCalcActive] = useState(false);
 
-    useEffect(() => {
+    useEffect(async() => {
         navigation.setOptions({ title: course.courseName, headerStyle: { backgroundColor: "#30d158" }, headerTintColor: "white" })
     }, [])
     

@@ -22,7 +22,7 @@ export default function AssignmentsList({ assignments, type, totalGrade, doomsda
                                     <View key={assignments.indexOf(assignment)} >
                                         <View style={{marginVertical: 20, flexDirection: "row", alignItems: "center"}}>
                                             <Text style={{fontSize: 15, width: "80%"}}>{name}</Text>
-                                            <Text style={{color: color, display: doomsdayCalcActive == true ? "none" : "initial"}}>{score}</Text>
+                                            <Text style={{color: color, textAlign: "center" ,display: doomsdayCalcActive == true ? "none" : "initial"}}>{score}</Text>
                                             <TextInput
                                                 value={grade}
                                                 keyboardType = 'numeric'
