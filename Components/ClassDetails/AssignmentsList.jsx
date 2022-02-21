@@ -1,28 +1,45 @@
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import { useState } from "react";
+import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { Divider } from "react-native-elements";
 
-export default function AssignmentsList({ assignments, type }) {
+export default function AssignmentsList({ assignments, type, totalGrade, doomsdayCalcActive, calcGrade }) {
     return (
-        <SafeAreaView style={{margin: 10, marginBottom: 50}}>
-           <Text style={[styles.header, { color: "#444444" }]}>{type}</Text>
-           
-            <View>
-                { assignments.map((assignment) => {
-                    const { assignment:name, score } = assignment
-                    const color = parseFloat(score) >= 90 ? "#30d158" : parseFloat(score) >= 80 ? "#ffd60a" : "#ff443a";
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+            <SafeAreaView style={{margin: 10, marginBottom: 50}}>
+                <View style={{flexDirection: "row", justifyContent: "space-between"}}>
+                    <Text style={[styles.header, { color: "#444444" }]}>{type}</Text>
+                    <Text style={[styles.header, { color: parseFloat(totalGrade) >= 90 ? "#30d158" : parseFloat(totalGrade) >= 80 ? "#ffd60a" : "#ff443a" }]}>{totalGrade}</Text>
+                </View>
+                    
+                        <View>
+                            { assignments.map((assignment) => {
+                                const { assignment:name, score } = assignment
+                                const color = parseFloat(score) >= 90 ? "#30d158" : parseFloat(score) >= 80 ? "#ffd60a" : "#ff443a";
 
-                    return (
-                        <View key={assignments.indexOf(assignment)} >
-                            <View style={{flexDirection: "row", justifyContent: "space-between", marginVertical: 20}}>
-                                <Text style={{flexWrap: "wrap", fontSize: 15}}>{name}</Text>
-                                <Text style={{color: color}}>{score}</Text>
-                            </View>
-                            <Divider />
+                                const [grade, setGrade] = useState(score);
+
+                                return (
+                                    <View key={assignments.indexOf(assignment)} >
+                                        <View style={{marginVertical: 20, flexDirection: "row", alignItems: "center"}}>
+                                            <Text style={{fontSize: 15, width: "80%"}}>{name}</Text>
+                                            <Text style={{color: color, display: doomsdayCalcActive == true ? "none" : "initial"}}>{score}</Text>
+                                            <TextInput
+                                                value={grade}
+                                                keyboardType = 'numeric'
+                                                onChangeText={(newGrade) => {
+                                                    setGrade(newGrade);
+                                                    calcGrade(assignment, parseFloat(newGrade))
+                                                }}
+                                                style={{backgroundColor: "#f0f0f0", width: "20%", textAlign: "center", borderRadius: 5, height: 20, color: color, display: doomsdayCalcActive == true ? "initial" : "none"}}
+                                            />
+                                        </View>
+                                        <Divider />
+                                    </View>
+                                )
+                            }) }
                         </View>
-                    )
-                }) }
-            </View>
-        </SafeAreaView>
+            </SafeAreaView>
+        </TouchableWithoutFeedback>
     )
 }
 
