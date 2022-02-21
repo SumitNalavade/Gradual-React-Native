@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
 import { ScrollView, TouchableOpacity, StyleSheet, Text } from "react-native";
 import AssignmentsList from "./AssignmentsList";
+import { storeStudent, readStudent } from "../../utils";
 import Donut from "./Donut";
 
 export default function ClassDetails({ navigation, route }) {
+    useEffect(async() => {
+        navigation.setOptions({ title: course.courseName, headerStyle: { backgroundColor: "#30d158" }, headerTintColor: "white" });
+        await storeStudent(course.assignments);
+    }, [])
+
     const [doomsdayCalcActive, setDoomsdayCalcActive] = useState(false);
 
-    useEffect(async() => {
-        navigation.setOptions({ title: course.courseName, headerStyle: { backgroundColor: "#30d158" }, headerTintColor: "white" })
-    }, [])
-    
     const { course } = route.params;
 
     const [allAssignments, setAllAssignments] = useState(course.assignments);
-    
+
     const allMajorAssignments = allAssignments.filter(assignment => assignment["category"] === "Major Grades")
     const allMinorAssignments = allAssignments.filter(assignment => assignment["category"] === "Minor Grades")
     const allNonGradedAssignments = allAssignments.filter(assignment => assignment["category"] === "Non-graded")
@@ -24,29 +26,32 @@ export default function ClassDetails({ navigation, route }) {
     const majorAssignmentsGrade = validMajorAssignments.reduce((previousValue, currentValue) => (previousValue += parseFloat(currentValue["score"])/validMajorAssignments.length), 0).toFixed(2);
     const minorAssignmentsGrade = validMinorAssignments.reduce((previousValue, currentValue) => previousValue += parseFloat(currentValue["score"]/validMinorAssignments.length), 0).toFixed(2)
     
-    const finalGrade = ((majorAssignmentsGrade * 0.6) + (minorAssignmentsGrade * 0.4)).toFixed(2)
-
-    const calcGrade = (newAssignment, newGrade) => {
+    const updateAssignments = (newAssignment, newGrade) => {
         const assignmentsCopy = [...course.assignments]
 
-        const assignmentToUpdateIndex = assignmentsCopy.findIndex(assignment => assignment === newAssignment);
+        const assignmentToUpdateIndex = assignmentsCopy.findIndex(assignment => assignment.assignment === newAssignment.assignment);
         assignmentsCopy[assignmentToUpdateIndex].score = newGrade
 
         setAllAssignments(assignmentsCopy);
     }
 
+    const reset = async() => {
+        setAllAssignments(await readStudent())
+    }
+
     return (
         <ScrollView contentContainerStyle={{justifyContent: "space-between"}} style={{backgroundColor: "white"}}>
-            <Donut percentage={finalGrade} />
+            <Donut percentage={doomsdayCalcActive ? ((majorAssignmentsGrade * 0.6) + (minorAssignmentsGrade * 0.4)).toFixed(2) : course.grade} />
             
-            <TouchableOpacity style={styles.button} onPress={() => {
-                setDoomsdayCalcActive(!doomsdayCalcActive)
+            <TouchableOpacity style={styles.button} onPress={async() => {
+                setDoomsdayCalcActive(!doomsdayCalcActive);
+                await reset();
             }}>
-                <Text style={{color: "white", fontWeight: "bold", fontSize: 12}}>Doomsday Calculator</Text>
+                <Text style={{color: "white", fontWeight: "bold", fontSize: 12}}>{doomsdayCalcActive ? "Reset" : "Doomsday Calculator"}</Text>
             </TouchableOpacity>
 
-            <AssignmentsList assignments={allMajorAssignments} type="Major Grades" totalGrade={majorAssignmentsGrade} doomsdayCalcActive={doomsdayCalcActive} calcGrade={calcGrade}/>
-            <AssignmentsList assignments={allMinorAssignments} type="Minor Grades" totalGrade={minorAssignmentsGrade} doomsdayCalcActive={doomsdayCalcActive} calcGrade={calcGrade}/>
+            <AssignmentsList assignments={allMajorAssignments} type="Major Grades" totalGrade={majorAssignmentsGrade} doomsdayCalcActive={doomsdayCalcActive} updateAssignments={updateAssignments}/>
+            <AssignmentsList assignments={allMinorAssignments} type="Minor Grades" totalGrade={minorAssignmentsGrade} doomsdayCalcActive={doomsdayCalcActive} updateAssignments={updateAssignments}/>
             <AssignmentsList assignments={allNonGradedAssignments} type="Non Graded" totalGrade=""/>
         </ScrollView>
     )

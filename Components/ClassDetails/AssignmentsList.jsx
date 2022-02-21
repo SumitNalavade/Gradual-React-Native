@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { Divider } from "react-native-elements";
 
-export default function AssignmentsList({ assignments, type, totalGrade, doomsdayCalcActive, calcGrade }) {
+export default function AssignmentsList({ assignments, type, totalGrade, doomsdayCalcActive, updateAssignments }) {
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
             <SafeAreaView style={{margin: 10, marginBottom: 50}}>
@@ -18,6 +18,10 @@ export default function AssignmentsList({ assignments, type, totalGrade, doomsda
 
                                 const [grade, setGrade] = useState(score);
 
+                                useEffect(() => {
+                                    if(!doomsdayCalcActive) { setGrade(assignment.score) }
+                                })
+
                                 return (
                                     <View key={assignments.indexOf(assignment)} >
                                         <View style={{marginVertical: 20, flexDirection: "row", alignItems: "center"}}>
@@ -28,7 +32,7 @@ export default function AssignmentsList({ assignments, type, totalGrade, doomsda
                                                 keyboardType = 'numeric'
                                                 onChangeText={(newGrade) => {
                                                     setGrade(newGrade);
-                                                    calcGrade(assignment, parseFloat(newGrade))
+                                                    updateAssignments(assignment, newGrade)
                                                 }}
                                                 style={{backgroundColor: "#f0f0f0", width: "20%", textAlign: "center", borderRadius: 5, height: 20, color: color, display: doomsdayCalcActive == true ? "initial" : "none"}}
                                             />
