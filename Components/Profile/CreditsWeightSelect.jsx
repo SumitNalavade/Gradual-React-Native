@@ -8,7 +8,7 @@ export default function CreditsWeightSelect({ type, course, student, updateStude
 
     return (
         <View style={{flexDirection: "row", marginVertical: 10}}>
-                            <Text style={{width: "80%", color: "#444444"}}>{type}</Text>
+                            <Text style={{width: "78%", color: "#444444"}}>{type}</Text>
                             <View style={{flexDirection: "row", backgroundColor: "#00C801", borderRadius: 10, alignItems: "center", paddingHorizontal: 5}}>
                                 <Dropdown data={type.toLowerCase() == "credits" ? credits : weights} defaultValue={(course[type.toLowerCase()])} courseName={course.name} student={student} updateStudent={updateStudent} type={type.toLowerCase()}/>
                                 <AntDesign name="caretdown" size={20} color="white" />

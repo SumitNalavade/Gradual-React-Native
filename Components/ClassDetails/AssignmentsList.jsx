@@ -16,7 +16,7 @@ export default function AssignmentsList({ assignments, type, totalGrade, doomsda
                                 const { assignment:name, score, totalPoints } = assignment;
 
                                 var finalGrade = null
-                                parseFloat(score) && totalPoints ? finalGrade = String((score/totalPoints)*100) : finalGrade = score
+                                parseFloat(score) && totalPoints ? finalGrade = String(((score/totalPoints)*100)) : finalGrade = score
 
                                 const color = parseFloat(finalGrade) >= 90 ? "#30d158" : parseFloat(finalGrade) >= 80 ? "#ffd60a" : "#ff443a";
 
@@ -30,7 +30,7 @@ export default function AssignmentsList({ assignments, type, totalGrade, doomsda
                                     <View key={assignments.indexOf(assignment)} >
                                         <View style={{marginVertical: 20, flexDirection: "row", alignItems: "center"}}>
                                             <Text style={{fontSize: 15, width: "80%"}}>{name}</Text>
-                                            <Text style={{color: color, justifyContent: "center", width: "20%" ,display: doomsdayCalcActive == true ? "none" : "flex"}}>{finalGrade}</Text>
+                                            <Text style={{color: color, justifyContent: "center", textAlign: "center" ,width: "20%" ,display: doomsdayCalcActive == true ? "none" : "flex"}}>{finalGrade}</Text>
                                             <TextInput
                                                 value={grade}
                                                 keyboardType = 'numeric'

@@ -34,7 +34,7 @@ export default function Profile({ navigation, route }) {
         const studentCopy = {...selfStudent}
         const studentToUpdateIndex = studentCopy.classes.findIndex(course => course.name === courseName);
 
-        studentCopy.classes[studentToUpdateIndex].grade = parseFloat(newGrade);
+        studentCopy.classes[studentToUpdateIndex].grade = newGrade;
 
         setStudent(studentCopy);
     }
