@@ -30,6 +30,15 @@ export default function Profile({ navigation, route }) {
         setStudent(studentCopy)
     }
 
+    const updateGrade = (courseName, newGrade) => {
+        const studentCopy = {...selfStudent}
+        const studentToUpdateIndex = studentCopy.classes.findIndex(course => course.name === courseName);
+
+        studentCopy.classes[studentToUpdateIndex].grade = parseFloat(newGrade);
+
+        setStudent(studentCopy);
+    }
+
     const toggleClass = (c) => {
         const studentCopy = {...selfStudent}
 
@@ -57,7 +66,7 @@ export default function Profile({ navigation, route }) {
             <ScrollView>
                 <StudentInfo studentInfo={student.info}/>
 
-                <CoursesInfo student={student} updateStudent={updateStudent} toggleClass={toggleClass} predictGPA={predictGPA}/>
+                <CoursesInfo student={student} updateStudent={updateStudent} toggleClass={toggleClass} predictGPA={predictGPA} updateGrade={updateGrade}/>
 
                 <TouchableOpacity
                     style={styles.button}
