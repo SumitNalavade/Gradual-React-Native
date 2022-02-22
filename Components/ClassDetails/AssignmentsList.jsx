@@ -13,20 +13,24 @@ export default function AssignmentsList({ assignments, type, totalGrade, doomsda
                     
                         <View>
                             { assignments.map((assignment) => {
-                                const { assignment:name, score } = assignment
-                                const color = parseFloat(score) >= 90 ? "#30d158" : parseFloat(score) >= 80 ? "#ffd60a" : "#ff443a";
+                                const { assignment:name, score, totalPoints } = assignment;
 
-                                const [grade, setGrade] = useState(score);
+                                var finalGrade = null
+                                parseFloat(score) && totalPoints ? finalGrade = String((score/totalPoints)*100) : finalGrade = score
+
+                                const color = parseFloat(finalGrade) >= 90 ? "#30d158" : parseFloat(finalGrade) >= 80 ? "#ffd60a" : "#ff443a";
+
+                                const [grade, setGrade] = useState(finalGrade);
 
                                 useEffect(() => {
-                                    if(!doomsdayCalcActive) { setGrade(assignment.score) }
+                                    if(!doomsdayCalcActive) { setGrade(finalGrade) }
                                 })
 
                                 return (
                                     <View key={assignments.indexOf(assignment)} >
                                         <View style={{marginVertical: 20, flexDirection: "row", alignItems: "center"}}>
                                             <Text style={{fontSize: 15, width: "80%"}}>{name}</Text>
-                                            <Text style={{color: color, justifyContent: "center", width: "20%" ,display: doomsdayCalcActive == true ? "none" : "flex"}}>{score}</Text>
+                                            <Text style={{color: color, justifyContent: "center", width: "20%" ,display: doomsdayCalcActive == true ? "none" : "flex"}}>{finalGrade}</Text>
                                             <TextInput
                                                 value={grade}
                                                 keyboardType = 'numeric'

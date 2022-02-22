@@ -23,8 +23,8 @@ export default function ClassDetails({ navigation, route }) {
     const validMajorAssignments = allMajorAssignments.filter(assignment => parseFloat(assignment["score"]));
     const validMinorAssignments = allMinorAssignments.filter(assignment => parseFloat(assignment["score"]));
 
-    const majorAssignmentsGrade = validMajorAssignments.reduce((previousValue, currentValue) => (previousValue += parseFloat(currentValue["score"])/validMajorAssignments.length), 0).toFixed(2);
-    const minorAssignmentsGrade = validMinorAssignments.reduce((previousValue, currentValue) => previousValue += parseFloat(currentValue["score"]/validMinorAssignments.length), 0).toFixed(2)
+    const majorAssignmentsGrade = validMajorAssignments.reduce((previousValue, currentValue) => (previousValue += parseFloat((currentValue["score"] / currentValue["totalPoints"]) * 100)/validMajorAssignments.length), 0).toFixed(2);
+    const minorAssignmentsGrade = validMinorAssignments.reduce((previousValue, currentValue) =>( previousValue += parseFloat((currentValue["score"] / currentValue["totalPoints"]) * 100)/validMinorAssignments.length), 0).toFixed(2)
     
     const updateAssignments = (newAssignment, newGrade) => {
         const assignmentsCopy = [...course.assignments]
