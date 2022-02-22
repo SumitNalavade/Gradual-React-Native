@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     dropdownButton: {
         height: 30,
         backgroundColor: "transparent",
-        width: 50
+        width: 60
     },
 
     dropdownText: {

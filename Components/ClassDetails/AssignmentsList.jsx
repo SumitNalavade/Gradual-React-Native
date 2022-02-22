@@ -26,7 +26,7 @@ export default function AssignmentsList({ assignments, type, totalGrade, doomsda
                                     <View key={assignments.indexOf(assignment)} >
                                         <View style={{marginVertical: 20, flexDirection: "row", alignItems: "center"}}>
                                             <Text style={{fontSize: 15, width: "80%"}}>{name}</Text>
-                                            <Text style={{color: color, textAlign: "center" ,display: doomsdayCalcActive == true ? "none" : "initial"}}>{score}</Text>
+                                            <Text style={{color: color, justifyContent: "center", width: "20%" ,display: doomsdayCalcActive == true ? "none" : "flex"}}>{score}</Text>
                                             <TextInput
                                                 value={grade}
                                                 keyboardType = 'numeric'
@@ -34,7 +34,7 @@ export default function AssignmentsList({ assignments, type, totalGrade, doomsda
                                                     setGrade(newGrade);
                                                     updateAssignments(assignment, newGrade)
                                                 }}
-                                                style={{backgroundColor: "#f0f0f0", width: "20%", textAlign: "center", borderRadius: 5, height: 20, color: color, display: doomsdayCalcActive == true ? "initial" : "none"}}
+                                                style={{backgroundColor: "#f0f0f0", width: "20%", textAlign: "center", borderRadius: 5, height: 20, color: color, display: doomsdayCalcActive == true ? "flex" : "none"}}
                                             />
                                         </View>
                                         <Divider />
