@@ -23,11 +23,11 @@ export default function CoursesInfo( { student, updateStudent, toggleClass, pred
                         <Text style={{fontSize: 15, fontWeight: "bold", color: "#444444", marginBottom: 10}}>{courseName}</Text>
 
 
-                        <View style={{flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 5}}>
+                        <View style={{flexDirection: "row", justifyContent: "space-between", marginVertical: 10}}>
                             <Text style={{width: "80%", color: "#444444"}}>Grade</Text>
 
                             <TextInput
-                                value={grade}
+                                value={String(grade)}
                                 keyboardType = 'numeric'
                                 onChangeText={(newGrade) => {
                                     setGrade(newGrade);
@@ -37,6 +37,8 @@ export default function CoursesInfo( { student, updateStudent, toggleClass, pred
                                 style={{width: "20%", textAlign: "center", backgroundColor: "#f0f0f0", borderRadius: 5, height: 20}}
                             />
                         </View>
+
+                        <Divider />
 
                         <CreditsWeightSelect type="Weight" course={course} student={student} updateStudent={updateStudent} />
 

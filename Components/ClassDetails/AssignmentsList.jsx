@@ -21,10 +21,11 @@ export default function AssignmentsList({ assignments, type, totalGrade, doomsda
                                 const color = parseFloat(finalGrade) >= 90 ? "#30d158" : parseFloat(finalGrade) >= 80 ? "#ffd60a" : "#ff443a";
 
                                 const [grade, setGrade] = useState(finalGrade);
-
+                        
                                 useEffect(() => {
                                     if(!doomsdayCalcActive) { setGrade(finalGrade) }
                                 })
+
 
                                 return (
                                     <View key={assignments.indexOf(assignment)} >

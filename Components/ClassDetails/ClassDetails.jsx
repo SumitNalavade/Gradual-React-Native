@@ -50,8 +50,8 @@ export default function ClassDetails({ navigation, route }) {
                 <Text style={{color: "white", fontWeight: "bold", fontSize: 12}}>{doomsdayCalcActive ? "Reset" : "Doomsday Calculator"}</Text>
             </TouchableOpacity>
 
-            <AssignmentsList assignments={allMajorAssignments} type="Major Grades" totalGrade={majorAssignmentsGrade} doomsdayCalcActive={doomsdayCalcActive} updateAssignments={updateAssignments}/>
-            <AssignmentsList assignments={allMinorAssignments} type="Minor Grades" totalGrade={minorAssignmentsGrade} doomsdayCalcActive={doomsdayCalcActive} updateAssignments={updateAssignments}/>
+            <AssignmentsList assignments={allMajorAssignments} type="Major Grades" totalGrade={majorAssignmentsGrade} doomsdayCalcActive={doomsdayCalcActive} updateAssignments={updateAssignments} />
+            <AssignmentsList assignments={allMinorAssignments} type="Minor Grades" totalGrade={minorAssignmentsGrade} doomsdayCalcActive={doomsdayCalcActive} updateAssignments={updateAssignments} />
             <AssignmentsList assignments={allNonGradedAssignments} type="Non Graded" totalGrade=""/>
         </ScrollView>
     )
