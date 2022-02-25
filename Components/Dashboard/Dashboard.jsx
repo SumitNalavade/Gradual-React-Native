@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { SafeAreaView, TouchableOpacity} from "react-native";
+import { SafeAreaView, TouchableOpacity, View} from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 
 import DashboardHeader from "./DashboardHeader";
@@ -11,7 +11,7 @@ export default function Dashboard({ route, navigation }) {
     useEffect(() => {    
         navigation.setOptions({ title: ``, headerStyle: { backgroundColor: "#30d158" }, headerTintColor: "white", headerRight: () => <TouchableOpacity onPress={() => navigateToProfile()}>
         <Ionicons name="person-outline" size={24} color="white" />
-    </TouchableOpacity>})
+</TouchableOpacity>, headerLeft: () => <View></View>})
     }, [])
 
     const navigateToClassDetails = (course, courseInfo) => {
