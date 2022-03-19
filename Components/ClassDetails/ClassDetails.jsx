@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ScrollView, TouchableOpacity, StyleSheet, Text } from "react-native";
 import AssignmentsList from "./AssignmentsList";
 import { storeStudent, readStudent } from "../../utils";
-import Donut from "./Donut";
+import ClassAverage from "./ClassAverage";
 
 export default function ClassDetails({ navigation, route }) {
     useEffect(async() => {
@@ -41,7 +41,7 @@ export default function ClassDetails({ navigation, route }) {
 
     return (
         <ScrollView contentContainerStyle={{justifyContent: "space-between"}} style={{backgroundColor: "white"}}>
-            <Donut percentage={doomsdayCalcActive ? ((majorAssignmentsGrade * 0.6) + (minorAssignmentsGrade * 0.4)).toFixed(2) : course.grade} />
+            <ClassAverage majorAssignmentsGrade={majorAssignmentsGrade} minorAssignmentsGrade={minorAssignmentsGrade} percentage={doomsdayCalcActive ? ((majorAssignmentsGrade * 0.6) + (minorAssignmentsGrade * 0.4)).toFixed(2) : course.grade} />
             
             <TouchableOpacity style={styles.button} onPress={async() => {
                 setDoomsdayCalcActive(!doomsdayCalcActive);
