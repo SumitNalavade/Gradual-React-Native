@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { StyleSheet ,View, TextInput, TouchableOpacity, Text, Keyboard, TouchableWithoutFeedback } from "react-native";
-import { Picker } from "@react-native-picker/picker";
+import { ButtonGroup } from 'react-native-elements'
 
 export default function AddTransactionForm({ addAssignment, setModalVisible }) {
     const [title, setTitle] = useState(null);
     const [grade, setGrade] = useState(null);
-    const [category, setCategory] = useState('Unknown');
+    const [selectedIndex, setSelectedIndex] = useState(0);
     
     const validateFields = () => {
         if(!title) {
@@ -13,9 +13,6 @@ export default function AddTransactionForm({ addAssignment, setModalVisible }) {
             return false
         } else if (!grade) {
             alert("Grade is required");
-            return false
-        } else if(category === "Unknown") {
-            alert("Select a category");
             return false
         } 
         return true
@@ -33,21 +30,25 @@ export default function AddTransactionForm({ addAssignment, setModalVisible }) {
                         <Text style={styles.headingLabel}>Grade</Text>
                         <TextInput onChangeText={(evt) => setGrade(evt.trim())} keyboardType="number-pad" returnKeyType="done"  placeholder="0.00" style={[ styles.textInput ]} />
                     </View>
-
-                    <View style={styles.innerContainer}>
-                        <Picker
-                            selectedValue={category}
-                            onValueChange={(value, index) => setCategory(value)}
-                            mode="dropdown" // Android only
-                            style={styles.picker} >
-                            <Picker.Item label="Category" value="Unknown" />
-                            <Picker.Item label="Major" value="Major Grades" />
-                            <Picker.Item label="Minor" value="Minor Grades" />
-                        </Picker>
-                    </View>
  
+                    <View style={styles.innerContainer}>
+                                        <ButtonGroup
+                        buttons={['Major', 'Minor']}
+                        selectedIndex={selectedIndex}
+                        onPress={(value) => {
+                            setSelectedIndex(value);
+                        }}
+                        containerStyle={{ marginBottom: 20, width: "100%" }}
+                        selectedButtonStyle = {{backgroundColor: "#30d158", color: "white"}}
+                        />
+                    </View>
+
                     <TouchableOpacity onPress={() => {
                         if(validateFields()) {
+                            let category;
+
+                            selectedIndex == 0 ? category = "Major Grades" : category = "Minor Grades"
+
                             addAssignment(title, grade, category);
                             return setModalVisible(false);
                         }
@@ -64,7 +65,7 @@ export default function AddTransactionForm({ addAssignment, setModalVisible }) {
 
 const styles = StyleSheet.create({
     textInput: {
-        width: "90%",
+        width: "100%",
         borderWidth: 1,
         borderColor: "lightgray",
         marginVertical: 10,
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
     headingLabel: {
         width: "100%",
         textAlign: "center",
-        fontSize: 22,
+        fontSize: 20,
         marginTop: 10,
 
         fontWeight: "bold",
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
     submitButton: {
         width: "75%",
         marginHorizontal: "auto",
-        paddingVertical: 15,
+        paddingVertical: 10,
         paddingHorizontal: 10,
         borderRadius: 10,
         backgroundColor: "#30d158"
@@ -102,7 +103,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         width: "100%",
-        margin: 50,
+        margin: 10,
+        marginBottom: 50,
         justifyContent: "center",
         alignItems: "center"
     },
@@ -110,7 +112,8 @@ const styles = StyleSheet.create({
     innerContainer: {
         flexGrow: 1,
         width: "100%",
-        alignItems: "center"
+        alignItems: "center",
+        paddingHorizontal: 20
     },
 
     picker: {

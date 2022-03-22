@@ -37,9 +37,6 @@ export default function ClassDetails({ navigation, route }) {
     const updateAssignments = (newAssignment, newGrade) => {
         const assignmentsCopy = [...allAssignments]
 
-        console.log(newAssignment);
-        console.log(assignmentsCopy);
-
         const assignmentToUpdateIndex = assignmentsCopy.findIndex(assignment => assignment.assignment === newAssignment.assignment);
         assignmentsCopy[assignmentToUpdateIndex].score = newGrade
 
