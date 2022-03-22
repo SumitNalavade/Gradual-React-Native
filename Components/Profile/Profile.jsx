@@ -3,7 +3,7 @@ import { TouchableOpacity, Text, ScrollView, SafeAreaView, StyleSheet, View } fr
 import StudentInfo from "./StudentInformation.jsx";
 import CoursesInfo from "./CoursesInformation.jsx";
 import GPAOverlay from "./GPAOverlay.jsx";
-import { getPredictedGPA } from "../../utils.js";
+import { getPredictedGPA, storeStudent } from "../../utils.js";
 
 export default function Profile({ navigation, route }) {
     const { student } = route.params
@@ -70,7 +70,10 @@ export default function Profile({ navigation, route }) {
 
                 <TouchableOpacity
                     style={styles.button}
-                    onPress={() => navigateToHome()}>
+                    onPress={() => {
+                        navigateToHome()
+                        storeStudent(null)
+                    }}>
                     <Text style={{color: "red"}}>Sign out</Text>
                 </TouchableOpacity>
             </ScrollView>

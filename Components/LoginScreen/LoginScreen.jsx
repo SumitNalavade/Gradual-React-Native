@@ -1,13 +1,21 @@
-import { useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, SafeAreaView} from 'react-native';
+import { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, SafeAreaView, Image} from 'react-native';
+import { StatusBar } from 'react-native';
 import gradualIcon from "../../assets/gradualIcon.png";
 
 import LoginForm from './LoginForm';
-import { getStudentData, infoURL, scheduleURL, currentClassesURL, gpaURL } from "../../utils";
+import { getStudentData, infoURL, scheduleURL, currentClassesURL, gpaURL, storeStudent, readStudent } from "../../utils";
 
 export default function LoginScreen({ navigation }) {
     const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(async() => {
+      const studentLogin = await readStudent();
+      if(studentLogin) {
+        const { username, password } = studentLogin;
+        loginFormSubmitted(username, password);
+      }
+    }, [])
 
     const student = {
         info: "",
@@ -36,6 +44,7 @@ export default function LoginScreen({ navigation }) {
           console.log("GPA Fetch Error");
         } finally {
             setIsLoading(false)
+            await storeStudent({username, password});
         }
 
         return navigation.navigate("Dashboard", { student: { ...student } })
@@ -52,7 +61,7 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-        <View style={{padding: 10}}>
+        <View style={{padding: 10}}>     
             <View style={styles.logoContainer}>
                 <Image source={gradualIcon} style={{width: 30, height: 30, margin: 5}}/>
                 <Text style={{margin: 5, fontSize: 20}}>Gradual</Text>

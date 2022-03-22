@@ -1,15 +1,17 @@
 import { useEffect, useState, useRef } from "react";
 import { ScrollView, TouchableOpacity, StyleSheet, Text, View } from "react-native";
 import AssignmentsList from "./AssignmentsList";
-import { storeStudent, readStudent } from "../../utils";
+import { storeClass, readClass } from "../../utils";
 import ClassAverage from "./ClassAverage";
 import AddTransaction from "../AddAssignment/AddAssignment";
 
 export default function ClassDetails({ navigation, route }) {
     useEffect(async() => { 
         navigation.setOptions({ title: course.courseName, headerStyle: { backgroundColor: "#30d158" }, headerTintColor: "white" });
-        await storeStudent(course.assignments)
+        await storeClass(course.assignments)
     }, [])
+
+    console.log(allAssignments);
 
     const [doomsdayCalcActive, setDoomsdayCalcActive] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
@@ -44,8 +46,7 @@ export default function ClassDetails({ navigation, route }) {
     }
 
     const reset = async() => {
-        const initialArray = await readStudent();
-        setAllAssignments(initialArray);
+        setAllAssignments(await readClass());
     }
 
     return (

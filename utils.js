@@ -33,24 +33,41 @@ export async function getStudentData(username, password, url) {
     return data
 }
 
-export const storeStudent = async (value) => {
+export const storeClass = async (value) => {
     try {
       const jsonValue = JSON.stringify(value)
-      await AsyncStorage.setItem('student', jsonValue)
+      await AsyncStorage.setItem('class', jsonValue)
     } catch (e) {
       // saving error
     }
 }
 
-export const readStudent = async () => {
+export const readClass = async () => {
     try {
-      const jsonValue = await AsyncStorage.getItem('student')
+      const jsonValue = await AsyncStorage.getItem('class')
       return jsonValue != null ? JSON.parse(jsonValue) : null;
     } catch(e) {
       // error reading value
     }
 }
   
+export const storeStudent = async (value) => {
+  try {
+    const jsonValue = JSON.stringify(value)
+    await AsyncStorage.setItem('student', jsonValue)
+  } catch (e) {
+    // saving error
+  }
+}
+
+export const readStudent = async () => {
+  try {
+    const jsonValue = await AsyncStorage.getItem('student')
+    return jsonValue != null ? JSON.parse(jsonValue) : null;
+  } catch(e) {
+    // error reading value
+  }
+}
 
 export const infoURL = "https://gradual-deploy.vercel.app/students/info"
 export const scheduleURL = "https://gradual-deploy.vercel.app/students/schedule"
