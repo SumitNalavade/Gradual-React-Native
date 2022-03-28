@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { Divider } from "react-native-elements";
 import Badge from './Badge';

@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { SafeAreaView, TouchableOpacity, View} from "react-native";
+
 import { Ionicons } from '@expo/vector-icons';
 
 import DashboardHeader from "./DashboardHeader";
-import DashboardClassList from "./DashboardClassList";
+import Tabview from "./Tabview";
 
 export default function Dashboard({ route, navigation }) {
     const { student } = route.params;
@@ -21,11 +22,13 @@ export default function Dashboard({ route, navigation }) {
     const navigateToProfile = () => {
         return navigation.navigate("Profile", { student: student });
     }
-      
+
+
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: "white" }}>
             <DashboardHeader student={student} navigateToProfile={navigateToProfile} />
-            <DashboardClassList student={student} navigateToClassDetails={navigateToClassDetails} />
+            
+            <Tabview student={student} navigateToClassDetails={navigateToClassDetails} />
         </SafeAreaView>
     )
 }
