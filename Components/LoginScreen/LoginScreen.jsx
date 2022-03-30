@@ -43,7 +43,9 @@ export default function LoginScreen({ navigation }) {
         } catch {
           console.log("GPA Fetch Error");
         } finally {
-            setIsLoading(false)
+            setIsLoading(false);
+            student.username = username;
+            student.password = password;
             await storeStudent({username, password});
         }
 

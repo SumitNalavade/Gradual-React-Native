@@ -6,35 +6,58 @@ import { TabView, SceneMap } from 'react-native-tab-view';
 import DashboardClassList from "./DashboardClassList";
 
 export default function Tabview({ student, navigateToClassDetails }) {
+    const { username, password } = student;
 
     const layout = useWindowDimensions();
     const [index, setIndex] = useState(3)
     const [mainStudent, setMainStudent] = useState(student);
+    const [isLoading, setIsLoading] = useState({0: true, 1: true, 2: true, 3: false});
 
     const populateData = async(index) => {
-        const pastAssignments = await axios.get(`https://gradual-deploy.vercel.app/students/pastassignments?username=177611&password=12242003&quarter=${index + 1}`);
+      let isLoadingCopy = {...isLoading};
+      for(let elm in isLoadingCopy) {
+        if(elm == index) {
+          isLoadingCopy[elm] = true
+        } else {
+          isLoadingCopy[elm] = false
+        }
+      }
+      setIsLoading(isLoadingCopy)
+
+        const pastAssignments = await axios.get(`https://gradual-deploy.vercel.app/students/pastassignments?username=${username}&password=${password}&quarter=${index + 1}`);
 
         const { currentClasses } = pastAssignments.data;
 
-        studentCopy = {...mainStudent};
+        const studentCopy = {...mainStudent};
         studentCopy.classes = currentClasses;
         setMainStudent(studentCopy);
+
+        isLoadingCopy = {...isLoading};
+        for(let elm in isLoadingCopy) {
+          if(elm == index) {
+            isLoadingCopy[elm] = false
+          } else {
+            isLoadingCopy[elm] = true
+          }
+        }
+        setIsLoading(isLoadingCopy)
+
     }
 
     const FirstRoute = () => (
-        <DashboardClassList student={mainStudent} navigateToClassDetails={navigateToClassDetails} />
+        <DashboardClassList student={mainStudent} navigateToClassDetails={navigateToClassDetails} isLoading={isLoading} index="0" />
       );
       
     const SecondRoute = () => (
-        <DashboardClassList student={mainStudent} navigateToClassDetails={navigateToClassDetails} />
+        <DashboardClassList student={mainStudent} navigateToClassDetails={navigateToClassDetails} isLoading={isLoading} index="1" />
     );
 
     const ThirdRoute = () => (
-        <DashboardClassList student={mainStudent} navigateToClassDetails={navigateToClassDetails} />
+        <DashboardClassList student={mainStudent} navigateToClassDetails={navigateToClassDetails} isLoading={isLoading} index="2" />
     );
 
     const FourthRoute = () => (
-        <DashboardClassList student={mainStudent} navigateToClassDetails={navigateToClassDetails} />
+        <DashboardClassList student={mainStudent} navigateToClassDetails={navigateToClassDetails} isLoading={isLoading} index="3" />
     );
 
     const renderScene = SceneMap({
