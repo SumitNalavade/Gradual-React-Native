@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useWindowDimensions } from "react-native";
-import { TabView, SceneMap } from 'react-native-tab-view';
+import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 
 import DashboardClassList from "./DashboardClassList";
 
@@ -15,13 +15,8 @@ export default function Tabview({ student, navigateToClassDetails }) {
 
     const populateData = async(index) => {
       let isLoadingCopy = {...isLoading};
-      for(let elm in isLoadingCopy) {
-        if(elm == index) {
-          isLoadingCopy[elm] = true
-        } else {
-          isLoadingCopy[elm] = false
-        }
-      }
+      
+      Object.values(isLoadingCopy).map((elm) => elm = !elm);
       setIsLoading(isLoadingCopy)
 
         const pastAssignments = await axios.get(`https://gradual-deploy.vercel.app/students/pastassignments?username=${username}&password=${password}&quarter=${index + 1}`);
@@ -60,6 +55,16 @@ export default function Tabview({ student, navigateToClassDetails }) {
         <DashboardClassList student={mainStudent} navigateToClassDetails={navigateToClassDetails} isLoading={isLoading} index="3" />
     );
 
+    const renderTabBar = props => (
+      <TabBar
+        {...props}
+        indicatorStyle={{ backgroundColor: 'white' }}
+        style={{ backgroundColor: '#30d158' }}
+        labelStyle={{fontWeight: "bold"}}
+      />
+    );
+  
+
     const renderScene = SceneMap({
         first: FirstRoute,
         second: SecondRoute,
@@ -68,10 +73,10 @@ export default function Tabview({ student, navigateToClassDetails }) {
     });
 
     const [routes] = useState([
-        { key: 'first', title: '1' },
-        { key: 'second', title: '2' },
-        { key: 'third', title: '3' },
-        { key: 'fourth', title: '4' },
+        { key: 'first', title: 'MP1' },
+        { key: 'second', title: 'MP2' },
+        { key: 'third', title: 'MP3' },
+        { key: 'fourth', title: 'MP4' },
       ]);
 
     return (
@@ -83,6 +88,7 @@ export default function Tabview({ student, navigateToClassDetails }) {
         populateData(number);
       }}
       initialLayout={{ width: layout.width }}
+      renderTabBar={renderTabBar}
     />
 
     )

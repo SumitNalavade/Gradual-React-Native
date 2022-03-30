@@ -57,13 +57,13 @@ export default function ClassDetails({ navigation, route }) {
                     setDoomsdayCalcActive(!doomsdayCalcActive);
                     await reset();
                 }}>
-                    <Text style={{color: "white", fontWeight: "bold", fontSize: 12}}>{doomsdayCalcActive ? "Reset" : "Doomsday Calculator"}</Text>
+                    <Text style={{color: "white", fontWeight: "bold", fontSize: 12}}>{doomsdayCalcActive ? "Reset" : "Edit Assignments"}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={[styles.button, { alignSelf: "flex-end", display: doomsdayCalcActive == true ? "flex" : "none" }]} onPress={async() => {
                     setModalVisible(true);
                 }}>
-                    <Text style={{color: "white", fontWeight: "bold", fontSize: 12}}>Add Assignment</Text>
+                    <Text style={{color: "white", fontWeight: "bold", fontSize: 12}}>Add New Assignment</Text>
                 </TouchableOpacity>
             </View>
 

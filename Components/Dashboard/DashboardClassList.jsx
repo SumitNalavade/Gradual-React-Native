@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import { Divider } from "react-native-elements";
 import Badge from './Badge';
 
@@ -10,7 +10,7 @@ export default function DashboardClassList({ student, navigateToClassDetails, is
     return (
       <View style={{flexGrow: 1}}>
           <View style={{flexGrow: 1, justifyContent: "center", alignItems: "center", display: isLoading[parseFloat(index)] == true ? "flex" : "none"}}>
-            <Text>Loading</Text>
+            <ActivityIndicator size="large" color="#30d158" />
           </View>
 
           <ScrollView contentContainerStyle={{flexGrow: 1, justifyContent: "space-evenly"}} style={{paddingHorizontal: 10, display: isLoading[parseFloat(index)] == true ? "none" : "flex"}}>
