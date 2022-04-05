@@ -5,7 +5,7 @@ import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 
 import DashboardClassList from "./DashboardClassList";
 
-export default function Tabview({ student, navigateToClassDetails }) {
+export default function Tabview({ student, navigateToClassDetails, loadData }) {
     const { username, password } = student;
 
     const layout = useWindowDimensions();
@@ -13,15 +13,13 @@ export default function Tabview({ student, navigateToClassDetails }) {
     const [mainStudent, setMainStudent] = useState(student);
     const [isLoading, setIsLoading] = useState({0: true, 1: true, 2: true, 3: false});
 
-    const populateData = async(index) => {
+    const populateData = async(index, username, password) => {
       let isLoadingCopy = {...isLoading};
       
       Object.values(isLoadingCopy).map((elm) => elm = !elm);
       setIsLoading(isLoadingCopy)
 
-        const pastAssignments = await axios.get(`https://gradual-deploy.vercel.app/students/pastassignments?username=${username}&password=${password}&quarter=${index + 1}`);
-
-        const { currentClasses } = pastAssignments.data;
+        const currentClasses = await loadData(index, username, password)
 
         const studentCopy = {...mainStudent};
         studentCopy.classes = currentClasses;
@@ -40,19 +38,19 @@ export default function Tabview({ student, navigateToClassDetails }) {
     }
 
     const FirstRoute = () => (
-        <DashboardClassList student={mainStudent} navigateToClassDetails={navigateToClassDetails} isLoading={isLoading} index="0" />
+        <DashboardClassList student={mainStudent} navigateToClassDetails={navigateToClassDetails} isLoading={isLoading} index="0" populateData={populateData} />
       );
       
     const SecondRoute = () => (
-        <DashboardClassList student={mainStudent} navigateToClassDetails={navigateToClassDetails} isLoading={isLoading} index="1" />
+        <DashboardClassList student={mainStudent} navigateToClassDetails={navigateToClassDetails} isLoading={isLoading} index="1" populateData={populateData} />
     );
 
     const ThirdRoute = () => (
-        <DashboardClassList student={mainStudent} navigateToClassDetails={navigateToClassDetails} isLoading={isLoading} index="2" />
+        <DashboardClassList student={mainStudent} navigateToClassDetails={navigateToClassDetails} isLoading={isLoading} index="2" populateData={populateData} />
     );
 
     const FourthRoute = () => (
-        <DashboardClassList student={mainStudent} navigateToClassDetails={navigateToClassDetails} isLoading={isLoading} index="3" />
+        <DashboardClassList student={mainStudent} navigateToClassDetails={navigateToClassDetails} isLoading={isLoading} index="3" populateData={populateData} />
     );
 
     const renderTabBar = props => (
@@ -85,7 +83,7 @@ export default function Tabview({ student, navigateToClassDetails }) {
       renderScene={renderScene}
       onIndexChange={(number) => {
         setIndex(number);
-        populateData(number);
+        populateData(number, username, password);
       }}
       initialLayout={{ width: layout.width }}
       renderTabBar={renderTabBar}

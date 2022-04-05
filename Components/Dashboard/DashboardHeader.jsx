@@ -1,4 +1,6 @@
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from "react-native";
+import { Ionicons } from '@expo/vector-icons';
+
 
 export default function DashboardHeader({ student, navigateToProfile }) {
     const studentName = student.info["name"].split(" ")[1];
