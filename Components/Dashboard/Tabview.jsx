@@ -5,13 +5,8 @@ import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 
 import DashboardClassList from "./DashboardClassList";
 
-export default function Tabview({ student, navigateToClassDetails, loadData }) {
-    const { username, password } = student;
-
+export default function Tabview({ username, password, navigateToClassDetails, loadData, index, setIndex, studentData, setStudentData, isLoading, setIsLoading }) {
     const layout = useWindowDimensions();
-    const [index, setIndex] = useState(3)
-    const [mainStudent, setMainStudent] = useState(student);
-    const [isLoading, setIsLoading] = useState({0: true, 1: true, 2: true, 3: false});
 
     const populateData = async(index, username, password) => {
       let isLoadingCopy = {...isLoading};
@@ -21,9 +16,9 @@ export default function Tabview({ student, navigateToClassDetails, loadData }) {
 
         const currentClasses = await loadData(index, username, password)
 
-        const studentCopy = {...mainStudent};
+        const studentCopy = {...studentData};
         studentCopy.classes = currentClasses;
-        setMainStudent(studentCopy);
+        setStudentData(studentCopy);
 
         isLoadingCopy = {...isLoading};
         for(let elm in isLoadingCopy) {
@@ -34,23 +29,22 @@ export default function Tabview({ student, navigateToClassDetails, loadData }) {
           }
         }
         setIsLoading(isLoadingCopy)
-
     }
 
     const FirstRoute = () => (
-        <DashboardClassList student={mainStudent} navigateToClassDetails={navigateToClassDetails} isLoading={isLoading} index="0" populateData={populateData} />
+        <DashboardClassList student={studentData} navigateToClassDetails={navigateToClassDetails} isLoading={isLoading} index="0" populateData={populateData} />
       );
       
     const SecondRoute = () => (
-        <DashboardClassList student={mainStudent} navigateToClassDetails={navigateToClassDetails} isLoading={isLoading} index="1" populateData={populateData} />
+        <DashboardClassList student={studentData} navigateToClassDetails={navigateToClassDetails} isLoading={isLoading} index="1" populateData={populateData} />
     );
 
     const ThirdRoute = () => (
-        <DashboardClassList student={mainStudent} navigateToClassDetails={navigateToClassDetails} isLoading={isLoading} index="2" populateData={populateData} />
+        <DashboardClassList student={studentData} navigateToClassDetails={navigateToClassDetails} isLoading={isLoading} index="2" populateData={populateData} />
     );
 
     const FourthRoute = () => (
-        <DashboardClassList student={mainStudent} navigateToClassDetails={navigateToClassDetails} isLoading={isLoading} index="3" populateData={populateData} />
+        <DashboardClassList student={studentData} navigateToClassDetails={navigateToClassDetails} isLoading={isLoading} index="3" populateData={populateData} />
     );
 
     const renderTabBar = props => (

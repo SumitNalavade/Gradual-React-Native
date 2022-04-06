@@ -17,7 +17,7 @@ export default function Profile({ navigation, route }) {
     };
 
     useEffect( async () => {
-        navigation.setOptions({ title: student.info.name });
+        navigation.setOptions({ title: student.info.name, headerStyle: { backgroundColor: "#30d158" }, headerTintColor: "white" });
     }, [])
 
     const updateStudent = async(selectedItem, courseName, type) => {
