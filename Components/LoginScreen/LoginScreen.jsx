@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, Image} from 'react-native';
 import { StatusBar } from 'react-native';
+
 import gradualIcon from "../../assets/gradualIcon.png";
 
 import LoginForm from './LoginForm';
@@ -24,11 +25,15 @@ export default function LoginScreen({ navigation }) {
         classes: ""
     }
 
+    const accessData = async(username, password) => {
+      return await Promise.all([getStudentData(username, password, infoURL), getStudentData(username, password, scheduleURL), getStudentData(username, password, currentClassesURL)])
+    }
+
     const loginFormSubmitted = async (username, password) => {    
-        setIsLoading(true)
+        setIsLoading(true);
 
         try {
-          await Promise.all([getStudentData(username, password, infoURL), getStudentData(username, password, scheduleURL), getStudentData(username, password, currentClassesURL)]).then((values) => {
+          await accessData(username, password).then((values) => {
             updateStudentData(values[0], "info");
             updateStudentData(values[1].schedule, "schedule");
             updateStudentData(values[2].currentClasses, "classes");
