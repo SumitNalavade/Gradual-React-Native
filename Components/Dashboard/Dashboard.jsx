@@ -30,7 +30,7 @@ export default function Dashboard({ navigation }) {
     }
 
     const { isFetching, error, data, refetch } = useQuery('repoData', async() => {
-        const { data } = await axios.get(`http://localhost:5000/students/pastassignments?username=${username}&password=${password}&quarter=${index + 1}`)
+        const { data } = await axios.get(`https://gradual-deploy.vercel.app/students/pastassignments?username=${username}&password=${password}&quarter=${index + 1}`)
         return data
     }, {
         refetchOnWindowFocus: false,
