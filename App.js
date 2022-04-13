@@ -2,7 +2,8 @@ import { StyleSheet} from 'react-native';
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
+import { QueryClient, QueryClientProvider } from 'react-query'
+import UserDetailsProvider from "./Components/userDetailsProvider";
 
 import LoginScreen from './Components/LoginScreen/LoginScreen';
 import Dashboard from './Components/Dashboard/Dashboard';
@@ -16,21 +17,23 @@ const queryClient = new QueryClient()
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <NavigationContainer>
-        <Stack.Navigator>
-        <Stack.Screen
-            name="Home"
-            component={LoginScreen}
-            options={{headerShown: false}}
-          />
+      <UserDetailsProvider>
+        <NavigationContainer>
+          <Stack.Navigator>
+          <Stack.Screen
+              name="Home"
+              component={LoginScreen}
+              options={{headerShown: false}}
+            />
 
-        <Stack.Screen name="Dashboard" component={Dashboard} options={{headerShown: true, headerShadowVisible: false}}/>
+          <Stack.Screen name="Dashboard" component={Dashboard} options={{headerShown: true, headerShadowVisible: false}}/>
 
-        <Stack.Screen name="Class Details" component={ClassDetails} options={{headerShown: true}}/>
+          <Stack.Screen name="Class Details" component={ClassDetails} options={{headerShown: true}}/>
 
-        <Stack.Screen name="Profile" component={Profile} options={{headerShown: true}}/>
-        </Stack.Navigator>
-      </NavigationContainer>
+          <Stack.Screen name="Profile" component={Profile} options={{headerShown: true}}/>
+          </Stack.Navigator>
+        </NavigationContainer>
+      </UserDetailsProvider>
     </QueryClientProvider>
   );
 }

@@ -1,13 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, Image} from 'react-native';
 import { StatusBar } from 'react-native';
 
 import gradualIcon from "../../assets/gradualIcon.png";
+import { userDetailsContext } from '../userDetailsProvider';
 
 import LoginForm from './LoginForm';
 import { getStudentData, infoURL, scheduleURL, currentClassesURL, gpaURL, storeStudent, readStudent } from "../../utils";
 
 export default function LoginScreen({ navigation }) {
+    const [userDetails, setUserDetails] = useContext(userDetailsContext);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(async() => {
@@ -54,7 +56,8 @@ export default function LoginScreen({ navigation }) {
             await storeStudent({username, password});
         }
 
-        return navigation.navigate("Dashboard", { student: { ...student } })
+        setUserDetails(student); //Pass the logged in student to the global state
+        return navigation.navigate("Dashboard")
      };
 
 
