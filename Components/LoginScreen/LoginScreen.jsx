@@ -1,22 +1,22 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, Image} from 'react-native';
 import { StatusBar } from 'react-native';
-
 import gradualIcon from "../../assets/gradualIcon.png";
-import { userDetailsContext } from '../userDetailsProvider';
 
 import LoginForm from './LoginForm';
+import CachedDataLoading from '../CachedDataLoading';
 import { getStudentData, infoURL, scheduleURL, currentClassesURL, gpaURL, storeStudent, readStudent } from "../../utils";
 
 export default function LoginScreen({ navigation }) {
-    const [userDetails, setUserDetails] = useContext(userDetailsContext);
     const [isLoading, setIsLoading] = useState(false);
+    const [cachedDataLoading, setCachedDataLoading] = useState(false);
 
     useEffect(async() => {
       const studentLogin = await readStudent();
       if(studentLogin) {
+        setCachedDataLoading(true)
         const { username, password } = studentLogin;
-        loginFormSubmitted(username, password);
+        loginFormSubmitted(username, password).then((res) => setCachedDataLoading(false));
       }
     }, [])
 
@@ -27,15 +27,11 @@ export default function LoginScreen({ navigation }) {
         classes: ""
     }
 
-    const accessData = async(username, password) => {
-      return await Promise.all([getStudentData(username, password, infoURL), getStudentData(username, password, scheduleURL), getStudentData(username, password, currentClassesURL)])
-    }
-
     const loginFormSubmitted = async (username, password) => {    
-        setIsLoading(true);
+        setIsLoading(true)
 
         try {
-          await accessData(username, password).then((values) => {
+          await Promise.all([getStudentData(username, password, infoURL), getStudentData(username, password, scheduleURL), getStudentData(username, password, currentClassesURL)]).then((values) => {
             updateStudentData(values[0], "info");
             updateStudentData(values[1].schedule, "schedule");
             updateStudentData(values[2].currentClasses, "classes");
@@ -56,8 +52,7 @@ export default function LoginScreen({ navigation }) {
             await storeStudent({username, password});
         }
 
-        setUserDetails(student); //Pass the logged in student to the global state
-        return navigation.navigate("Dashboard")
+        return navigation.navigate("Dashboard", { student: { ...student } })
      };
 
 
@@ -69,6 +64,12 @@ export default function LoginScreen({ navigation }) {
         return student[prop];
       };
 
+      if(cachedDataLoading) {
+        return (
+          <CachedDataLoading setCachedDataLoading={setCachedDataLoading} setIsLoading={setIsLoading} />
+        )
+      }
+      
   return (
     <SafeAreaView style={styles.container}>
         <View style={{padding: 10}}>     

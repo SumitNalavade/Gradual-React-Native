@@ -1,29 +1,26 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { useWindowDimensions } from "react-native";
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 
 import DashboardClassList from "./DashboardClassList";
-import { userDetailsContext } from "../userDetailsProvider";
 
-
-export default function Tabview({ navigateToClassDetails, getClassesByQuarter, index, setIndex, loading, setIsLoading }) {
+export default function Tabview({ username, password, navigateToClassDetails, loadData, index, setIndex, studentData, setStudentData, isLoading, setIsLoading }) {
     const layout = useWindowDimensions();
-    const [userDetails, setUserDetails] = useContext(userDetailsContext);
-    const { username, password } = userDetails
 
-    const getStudentGradesByQuarter = async(index, username, password) => {
-      let isLoadingCopy = {...loading};
+    const populateData = async(index, username, password) => {
+      let isLoadingCopy = {...isLoading};
       
       Object.values(isLoadingCopy).map((elm) => elm = !elm);
       setIsLoading(isLoadingCopy)
 
-        const currentClasses = await getClassesByQuarter(index, username, password)
+        const currentClasses = await loadData(index, username, password)
 
-        const studentCopy = {...userDetails};
+        const studentCopy = {...studentData};
         studentCopy.classes = currentClasses;
-        setUserDetails(studentCopy);
+        setStudentData(studentCopy);
 
-        isLoadingCopy = {...loading};
+        isLoadingCopy = {...isLoading};
         for(let elm in isLoadingCopy) {
           if(elm == index) {
             isLoadingCopy[elm] = false
@@ -35,19 +32,19 @@ export default function Tabview({ navigateToClassDetails, getClassesByQuarter, i
     }
 
     const FirstRoute = () => (
-        <DashboardClassList navigateToClassDetails={navigateToClassDetails} isLoading={loading} index="0" />
+        <DashboardClassList student={studentData} navigateToClassDetails={navigateToClassDetails} isLoading={isLoading} index="0" populateData={populateData} />
       );
       
     const SecondRoute = () => (
-        <DashboardClassList navigateToClassDetails={navigateToClassDetails} isLoading={loading} index="1" />
+        <DashboardClassList student={studentData} navigateToClassDetails={navigateToClassDetails} isLoading={isLoading} index="1" populateData={populateData} />
     );
 
     const ThirdRoute = () => (
-        <DashboardClassList navigateToClassDetails={navigateToClassDetails} isLoading={loading} index="2" />
+        <DashboardClassList student={studentData} navigateToClassDetails={navigateToClassDetails} isLoading={isLoading} index="2" populateData={populateData} />
     );
 
     const FourthRoute = () => (
-        <DashboardClassList navigateToClassDetails={navigateToClassDetails} isLoading={loading} index="3" />
+        <DashboardClassList student={studentData} navigateToClassDetails={navigateToClassDetails} isLoading={isLoading} index="3" populateData={populateData} />
     );
 
     const renderTabBar = props => (
@@ -80,7 +77,7 @@ export default function Tabview({ navigateToClassDetails, getClassesByQuarter, i
       renderScene={renderScene}
       onIndexChange={(number) => {
         setIndex(number);
-        getStudentGradesByQuarter(number, username, password);
+        populateData(number, username, password);
       }}
       initialLayout={{ width: layout.width }}
       renderTabBar={renderTabBar}

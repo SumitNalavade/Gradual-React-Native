@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 
-export default function DashboardHeader({ userDetails, navigateToProfile }) {
 
-    const studentName = userDetails.info["name"].split(" ")[1];
+export default function DashboardHeader({ student, navigateToProfile }) {
+    const studentName = student.info["name"].split(" ")[1];
     
     const currentHour = new Date().getHours()
     const greeting = currentHour < 12 ? "Good Morning" : currentHour < 18 ? "Good Afternoon" : "Good Evening";

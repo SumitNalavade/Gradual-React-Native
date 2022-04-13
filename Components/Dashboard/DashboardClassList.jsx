@@ -1,14 +1,11 @@
-import { useEffect, useContext } from 'react';
+import { useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import { Divider } from "react-native-elements";
-import { userDetailsContext } from "../userDetailsProvider";
 import Badge from './Badge';
 
-export default function DashboardClassList({ navigateToClassDetails, isLoading, index }) {
+export default function DashboardClassList({ student, navigateToClassDetails, isLoading, index }) {
 
-  const [userDetails, setUserDetails] = useContext(userDetailsContext);
-
-    const { classes, schedule } = userDetails;
+    const { classes, schedule } = student;
 
     return (
       <View style={{flexGrow: 1}}>
