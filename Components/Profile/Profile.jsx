@@ -9,8 +9,8 @@ export default function Profile({ navigation, route }) {
     const { student } = route.params
     const [selfStudent, setStudent] = useState(student)
     const [GPAS, setGPAS] = useState({finalWeightedGPA: "...", finalUnweightedGPA: "..."  })
-
     const [isVisible, setIsVisible] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
 
     const navigateToHome = () => {
         return navigation.navigate("Home")
@@ -52,16 +52,18 @@ export default function Profile({ navigation, route }) {
 
     const predictGPA = async() => {
         setIsVisible(true);
+        setIsLoading(true);
 
-        let { finalWeightedGPA, finalUnweightedGPA } = await getPredictedGPA(selfStudent)
+        let { finalWeightedGPA, finalUnweightedGPA } = await getPredictedGPA(selfStudent);
+        setGPAS({finalWeightedGPA: finalWeightedGPA.toFixed(3), finalUnweightedGPA: finalUnweightedGPA.toFixed(3)});
 
-        setGPAS({finalWeightedGPA: finalWeightedGPA.toFixed(3), finalUnweightedGPA: finalUnweightedGPA.toFixed(3)})
+        setIsLoading(false);
     }
 
     return (
         <SafeAreaView >
 
-            <GPAOverlay isVisible={isVisible} setIsVisible={setIsVisible} setGPAS={setGPAS} gpas={GPAS} />
+            <GPAOverlay isVisible={isVisible} setIsVisible={setIsVisible} gpas={GPAS} isLoading={isLoading} />
 
             <ScrollView>
                 <StudentInfo studentInfo={student.info}/>
