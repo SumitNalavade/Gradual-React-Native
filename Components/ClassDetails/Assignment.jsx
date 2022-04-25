@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableWithoutFeedba
 
 export default function Assignment({name, score, totalPoints, doomsdayCalcActive, updateAssignments}) {
     var finalGrade = null
-    parseFloat(score) && totalPoints ? finalGrade = String(((score/totalPoints)*100)) : finalGrade = score
+    parseFloat(score) && totalPoints ? finalGrade = ((score/totalPoints)*100).toFixed(2) : finalGrade = score
 
     const color = parseFloat(finalGrade) >= 90 ? "#30d158" : parseFloat(finalGrade) >= 80 ? "#ffd60a" : "#ff443a";
 
