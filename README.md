@@ -1,14 +1,13 @@
 
 # Gradual Grades
 
+UPDATE: GRADUAL IS CURRENTLY DOWN FOR THE SUMMER
+
 Cross platform mobile app for HAC client built for FRISCO ISD students
 
 Built with React Native/Expo for iOS and Android
 
 https://gradual.life/
-
-
-
 
 
 ## Features
