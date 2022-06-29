@@ -31,7 +31,7 @@ https://gradual.life/
 
 ## Screenshots
 
-![App Screenshot](https://github.com/SumitNalavade/Gradual-React-Native/blob/master/assets/mockups.png?raw=true)
+![](https://github.com/SumitNalavade/Gradual-React-Native/blob/master/assets/mockups.png?raw=true)
 
 
 ## Run Locally
