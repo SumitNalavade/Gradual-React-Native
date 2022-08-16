@@ -1,7 +1,7 @@
 
 # Gradual Grades
 
-UPDATE: GRADUAL IS CURRENTLY DOWN FOR THE SUMMER
+UPDATE: GRADUAL IS NO LONGER BEING MAINTAINED
 
 Cross platform mobile app for HAC client built for FRISCO ISD students
 
